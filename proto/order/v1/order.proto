@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package order.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/order/v1;orderv1";
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/orders"
+      body: "*"
+    };
+  }
+
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/orders/{id}"
+    };
+  }
+
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/orders"
+    };
+  }
+
+  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/orders/{id}/cancel"
+      body: "*"
+    };
+  }
+
+  rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (UpdateOrderStatusResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/orders/{id}/status"
+      body: "*"
+    };
+  }
+}
+
+message CreateOrderRequest {}
+
+message CreateOrderResponse {
+  Order order = 1;
+}
+
+message GetOrderRequest {
+  string id = 1;
+}
+
+message GetOrderResponse {
+  Order order = 1;
+}
+
+message ListOrdersRequest {
+  string status = 1;
+  int32  limit  = 2;
+  int32  offset = 3;
+}
+
+message ListOrdersResponse {
+  repeated Order orders = 1;
+  int64          total  = 2;
+}
+
+message CancelOrderRequest {
+  string id = 1;
+}
+
+message CancelOrderResponse {
+  Order order = 1;
+}
+
+message UpdateOrderStatusRequest {
+  string id     = 1;
+  string status = 2;
+}
+
+message UpdateOrderStatusResponse {
+  Order order = 1;
+}
+
+message Order {
+  string                    id           = 1;
+  string                    uid          = 2;
+  string                    username     = 3;
+  string                    status       = 4;
+  double                    total_amount = 5;
+  repeated OrderItem        items        = 6;
+  google.protobuf.Timestamp created_at   = 7;
+  google.protobuf.Timestamp updated_at   = 8;
+}
+
+message OrderItem {
+  int64  id          = 1;
+  string product_id  = 2;
+  int32  quantity    = 3;
+  double unit_price  = 4;
+  double total_price = 5;
+}

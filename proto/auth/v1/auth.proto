@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package auth.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/auth/v1;authv1";
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/register"
+      body: "*"
+    };
+  }
+
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/login"
+      body: "*"
+
+    };
+  }
+
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/logout"
+      body: "*"
+    };
+  }
+
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/refresh"
+      body: "*"
+    };
+  }
+
+  rpc GetMe(GetMeRequest) returns (GetMeResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/auth/me"
+    };
+  }
+}
+
+message RegisterRequest {
+  string username  = 1;
+  string email     = 2;
+  string password  = 3;
+  string full_name = 4;
+}
+
+message RegisterResponse {
+  string access_token  = 1;
+  string refresh_token = 2;
+  UserInfo user        = 3;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token  = 1;
+  string refresh_token = 2;
+  UserInfo user        = 3;
+}
+
+message LogoutRequest {
+  string refresh_token = 1;
+}
+
+message LogoutResponse {
+  bool success = 1;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token  = 1;
+  string refresh_token = 2;
+}
+
+message GetMeRequest {}
+
+message GetMeResponse {
+  UserInfo user = 1;
+}
+
+message UserInfo {
+  string                    username   = 1;
+  string                    uid        = 2;
+  string                    email      = 3;
+  string                    full_name  = 4;
+  string                    avatar_url = 5;
+  string                    role       = 6;
+  google.protobuf.Timestamp created_at = 7;
+}

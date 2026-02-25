@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package cart.v1;
+
+import "googleapis/google/api/annotations.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/cart/v1;cartv1";
+
+service CartService {
+  rpc GetCart(GetCartRequest) returns (GetCartResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/cart"
+    };
+  }
+
+  rpc AddItem(AddItemRequest) returns (AddItemResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/cart/items"
+      body: "*"
+    };
+  }
+
+  rpc RemoveItem(RemoveItemRequest) returns (RemoveItemResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/cart/items/{product_id}"
+    };
+  }
+
+  rpc UpdateItemQty(UpdateItemQtyRequest) returns (UpdateItemQtyResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/cart/items/{product_id}"
+      body: "*"
+    };
+  }
+
+  rpc ClearCart(ClearCartRequest) returns (ClearCartResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/cart"
+    };
+  }
+}
+
+message GetCartRequest {}
+
+message GetCartResponse {
+  Cart cart = 1;
+}
+
+message AddItemRequest {
+  string product_id = 1;
+  int32  quantity   = 2;
+}
+
+message AddItemResponse {
+  Cart cart = 1;
+}
+
+message RemoveItemRequest {
+  string product_id = 1;
+}
+
+message RemoveItemResponse {
+  Cart cart = 1;
+}
+
+message UpdateItemQtyRequest {
+  string product_id = 1;
+  int32  quantity   = 2;
+}
+
+message UpdateItemQtyResponse {
+  Cart cart = 1;
+}
+
+message ClearCartRequest {}
+
+message ClearCartResponse {
+  bool success = 1;
+}
+
+message Cart {
+  int64           id       = 1;
+  string          username = 2;
+  repeated CartItem items  = 3;
+  double          subtotal = 4;
+}
+
+message CartItem {
+  int64  id          = 1;
+  string product_id  = 2;
+  int32  quantity    = 3;
+  double unit_price  = 4;
+  double total_price = 5;
+}

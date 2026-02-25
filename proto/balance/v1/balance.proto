@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package balance.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/balance/v1;balancev1";
+
+service BalanceService {
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/balance"
+    };
+  }
+
+  rpc Deposit(DepositRequest) returns (DepositResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/balance/deposit"
+      body: "*"
+    };
+  }
+
+  rpc GetTransactionHistory(GetTransactionHistoryRequest) returns (GetTransactionHistoryResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/balance/transactions"
+    };
+  }
+}
+
+message GetBalanceRequest {}
+
+message GetBalanceResponse {
+  double amount = 1;
+}
+
+message DepositRequest {
+  double amount  = 1;
+  string comment = 2;
+}
+
+message DepositResponse {
+  double amount = 1;
+}
+
+message GetTransactionHistoryRequest {
+  int32 limit  = 1;
+  int32 offset = 2;
+}
+
+message GetTransactionHistoryResponse {
+  repeated BalanceTransaction transactions = 1;
+  int64                       total        = 2;
+}
+
+message BalanceTransaction {
+  int64                     id         = 1;
+  string                    type       = 2;
+  double                    amount     = 3;
+  string                    comment    = 4;
+  google.protobuf.Timestamp created_at = 5;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package category.v1;
+
+import "googleapis/google/api/annotations.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/category/v1;categoryv1";
+
+service CategoryService {
+  rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/categories"
+    };
+  }
+}
+
+message ListCategoriesRequest {}
+
+message ListCategoriesResponse {
+  repeated Category categories = 1;
+}
+
+message Category {
+  int32  id          = 1;
+  string slug        = 2;
+  string name        = 3;
+  string description = 4;
+  string icon_url    = 5;
+}

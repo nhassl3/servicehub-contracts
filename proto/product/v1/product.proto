@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package product.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/product/v1;productv1";
+
+service ProductService {
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/products"
+    };
+  }
+
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/products/{id}"
+    };
+  }
+
+  rpc SearchProducts(SearchProductsRequest) returns (SearchProductsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/products/search"
+    };
+  }
+
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/products"
+      body: "*"
+    };
+  }
+
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/products/{id}"
+      body: "*"
+    };
+  }
+
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/products/{id}"
+    };
+  }
+}
+
+message ListProductsRequest {
+  optional int32  category_id = 1;
+  optional string seller_id   = 2;
+  optional double min_price   = 3;
+  optional double max_price   = 4;
+  int32           limit       = 5;
+  int32           offset      = 6;
+}
+
+message ListProductsResponse {
+  repeated Product products = 1;
+  int64            total    = 2;
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message GetProductResponse {
+  Product product = 1;
+}
+
+message SearchProductsRequest {
+  string query  = 1;
+  int32  limit  = 2;
+  int32  offset = 3;
+}
+
+message SearchProductsResponse {
+  repeated Product products = 1;
+  int64            total    = 2;
+}
+
+message CreateProductRequest {
+  int32           category_id = 1;
+  string          title       = 2;
+  string          description = 3;
+  double          price       = 4;
+  repeated string tags        = 5;
+}
+
+message CreateProductResponse {
+  Product product = 1;
+}
+
+message UpdateProductRequest {
+  string          id          = 1;
+  string          title       = 2;
+  string          description = 3;
+  double          price       = 4;
+  repeated string tags        = 5;
+  string          status      = 6;
+}
+
+message UpdateProductResponse {
+  Product product = 1;
+}
+
+message DeleteProductRequest {
+  string id = 1;
+}
+
+message DeleteProductResponse {
+  bool success = 1;
+}
+
+message Product {
+  string                    id            = 1;
+  string                    seller_id     = 2;
+  int32                     category_id   = 3;
+  string                    title         = 4;
+  string                    description   = 5;
+  double                    price         = 6;
+  repeated string           tags          = 7;
+  string                    status        = 8;
+  int32                     sales_count   = 9;
+  double                    rating        = 10;
+  int32                     reviews_count = 11;
+  google.protobuf.Timestamp created_at    = 12;
+  google.protobuf.Timestamp updated_at    = 13;
+}

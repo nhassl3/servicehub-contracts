@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package wishlist.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/wishlist/v1;wishlistv1";
+
+service WishlistService {
+  rpc GetWishlist(GetWishlistRequest) returns (GetWishlistResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/wishlist"
+    };
+  }
+
+  rpc AddItem(AddItemRequest) returns (AddItemResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/wishlist/items"
+      body: "*"
+    };
+  }
+
+  rpc RemoveItem(RemoveItemRequest) returns (RemoveItemResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/wishlist/items/{product_id}"
+    };
+  }
+}
+
+message GetWishlistRequest {}
+
+message GetWishlistResponse {
+  repeated WishlistItem items = 1;
+}
+
+message AddItemRequest {
+  string product_id = 1;
+}
+
+message AddItemResponse {
+  WishlistItem item = 1;
+}
+
+message RemoveItemRequest {
+  string product_id = 1;
+}
+
+message RemoveItemResponse {
+  bool success = 1;
+}
+
+message WishlistItem {
+  int64                     id         = 1;
+  string                    product_id = 2;
+  google.protobuf.Timestamp created_at = 3;
+}
