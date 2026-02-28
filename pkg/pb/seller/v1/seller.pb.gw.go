@@ -62,22 +62,21 @@ func local_request_SellerService_CreateSeller_0(ctx context.Context, marshaler r
 	return msg, metadata, err
 }
 
+var filter_SellerService_GetSellerProfile_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+
 func request_SellerService_GetSellerProfile_0(ctx context.Context, marshaler runtime.Marshaler, client SellerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetSellerProfileRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["username"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "username")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	protoReq.Username, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "username", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SellerService_GetSellerProfile_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.GetSellerProfile(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -87,15 +86,12 @@ func local_request_SellerService_GetSellerProfile_0(ctx context.Context, marshal
 	var (
 		protoReq GetSellerProfileRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
-	val, ok := pathParams["username"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "username")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	protoReq.Username, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "username", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SellerService_GetSellerProfile_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.GetSellerProfile(ctx, &protoReq)
 	return msg, metadata, err
@@ -160,7 +156,7 @@ func RegisterSellerServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/seller.v1.SellerService/GetSellerProfile", runtime.WithHTTPPathPattern("/api/v1/sellers/{username}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/seller.v1.SellerService/GetSellerProfile", runtime.WithHTTPPathPattern("/api/v1/sellers"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -255,7 +251,7 @@ func RegisterSellerServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/seller.v1.SellerService/GetSellerProfile", runtime.WithHTTPPathPattern("/api/v1/sellers/{username}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/seller.v1.SellerService/GetSellerProfile", runtime.WithHTTPPathPattern("/api/v1/sellers"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -290,7 +286,7 @@ func RegisterSellerServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 
 var (
 	pattern_SellerService_CreateSeller_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "sellers"}, ""))
-	pattern_SellerService_GetSellerProfile_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "sellers", "username"}, ""))
+	pattern_SellerService_GetSellerProfile_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "sellers"}, ""))
 	pattern_SellerService_UpdateSeller_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "sellers", "me"}, ""))
 )
 
