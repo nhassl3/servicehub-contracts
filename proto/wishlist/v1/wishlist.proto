@@ -26,6 +26,12 @@ service WishlistService {
       delete: "/api/v1/wishlist/items/{product_id}"
     };
   }
+
+  rpc InWishlist(InWishlistRequest) returns (InWishlistResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/wishlist/items/{product_id}"
+    };
+  }
 }
 
 message GetWishlistRequest {}
@@ -48,6 +54,14 @@ message RemoveItemRequest {
 
 message RemoveItemResponse {
   bool success = 1;
+}
+
+message InWishlistRequest {
+  string product_id = 1;
+}
+
+message InWishlistResponse {
+  bool in_wishlist = 1;
 }
 
 message WishlistItem {
