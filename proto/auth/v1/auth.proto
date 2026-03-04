@@ -4,6 +4,7 @@ package auth.v1;
 
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/nhassl3/servicehub/internal/pb/auth/v1;authv1";
 
@@ -45,10 +46,20 @@ service AuthService {
 }
 
 message RegisterRequest {
-  string username  = 1;
-  string email     = 2;
-  string password  = 3;
-  string full_name = 4;
+  string username  = 1 [
+    (validate.rules).string = {
+      pattern: "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$",
+      max_bytes: 256,
+    }
+  ];
+  string email     = 2 [(validate.rules).string.email = true];
+  // RE2 do not support lookahead-assertions (REGEX syntax) —
+  // this is a fundamental limitation that cannot be circumvented in .proto
+  string password  = 3 [(validate.rules).string = {
+    pattern: "^[a-zA-Z0-9!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?\\\\|`~]{8,}$",
+    min_len: 8,
+  }];
+  string full_name = 4 [(validate.rules).string.pattern = "^[A-Za-zА-Яа-яЁё\\-' ]{2,100}$"];
 }
 
 message RegisterResponse {
@@ -58,8 +69,16 @@ message RegisterResponse {
 }
 
 message LoginRequest {
-  string username = 1;
-  string password = 2;
+  string username  = 1 [
+    (validate.rules).string = {
+      pattern: "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$",
+      max_bytes: 256,
+    }
+  ];
+  string password  = 2 [(validate.rules).string = {
+    pattern: "^[a-zA-Z0-9!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?\\\\|`~]{8,}$",
+    min_len: 8,
+  }];
 }
 
 message LoginResponse {
