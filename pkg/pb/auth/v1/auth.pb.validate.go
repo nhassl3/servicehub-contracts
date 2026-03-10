@@ -897,7 +897,7 @@ func (m *RefreshTokenRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for RefreshToken
+	// no validation rules for Username
 
 	if len(errors) > 0 {
 		return RefreshTokenRequestMultiError(errors)
