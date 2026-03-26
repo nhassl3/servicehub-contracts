@@ -20,7 +20,6 @@ service AuthService {
     option (google.api.http) = {
       post: "/api/v1/auth/login"
       body: "*"
-
     };
   }
 
@@ -88,9 +87,7 @@ message LoginResponse {
   UserInfo user        = 3;
 }
 
-message LogoutRequest {
-  string refresh_token = 1;
-}
+message LogoutRequest {}
 
 message LogoutResponse {
   bool success = 1;
