@@ -1,4 +1,4 @@
-.PHONY: proto install push
+.PHONY: proto install push evans
 
 .DEFAULT_GOAL := proto
 
@@ -38,3 +38,6 @@ proto:
 		--validate_opt=module=$(MODULE) \
 		$(PROTO_FILES)
 	@echo "Successfully built protocol buffers code files"
+
+evans:
+	@evans --path proto --proto auth/v1/auth.proto --host 127.0.0.1 -p 50051
