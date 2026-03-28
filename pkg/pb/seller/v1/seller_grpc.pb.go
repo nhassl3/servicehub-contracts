@@ -20,6 +20,7 @@ type SellerServiceClient interface {
 	CreateSeller(ctx context.Context, in *CreateSellerRequest, opts ...grpc.CallOption) (*CreateSellerResponse, error)
 	GetSellerProfile(ctx context.Context, in *GetSellerProfileRequest, opts ...grpc.CallOption) (*GetSellerProfileResponse, error)
 	UpdateSeller(ctx context.Context, in *UpdateSellerRequest, opts ...grpc.CallOption) (*UpdateSellerResponse, error)
+	UploadAvatar(ctx context.Context, in *UploadAvatarRequest, opts ...grpc.CallOption) (*UploadAvatarResponse, error)
 }
 
 type sellerServiceClient struct {
@@ -57,6 +58,15 @@ func (c *sellerServiceClient) UpdateSeller(ctx context.Context, in *UpdateSeller
 	return out, nil
 }
 
+func (c *sellerServiceClient) UploadAvatar(ctx context.Context, in *UploadAvatarRequest, opts ...grpc.CallOption) (*UploadAvatarResponse, error) {
+	out := new(UploadAvatarResponse)
+	err := c.cc.Invoke(ctx, "/seller.v1.SellerService/UploadAvatar", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SellerServiceServer is the server API for SellerService service.
 // All implementations must embed UnimplementedSellerServiceServer
 // for forward compatibility
@@ -64,6 +74,7 @@ type SellerServiceServer interface {
 	CreateSeller(context.Context, *CreateSellerRequest) (*CreateSellerResponse, error)
 	GetSellerProfile(context.Context, *GetSellerProfileRequest) (*GetSellerProfileResponse, error)
 	UpdateSeller(context.Context, *UpdateSellerRequest) (*UpdateSellerResponse, error)
+	UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error)
 	mustEmbedUnimplementedSellerServiceServer()
 }
 
@@ -79,6 +90,9 @@ func (UnimplementedSellerServiceServer) GetSellerProfile(context.Context, *GetSe
 }
 func (UnimplementedSellerServiceServer) UpdateSeller(context.Context, *UpdateSellerRequest) (*UpdateSellerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSeller not implemented")
+}
+func (UnimplementedSellerServiceServer) UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadAvatar not implemented")
 }
 func (UnimplementedSellerServiceServer) mustEmbedUnimplementedSellerServiceServer() {}
 
@@ -147,6 +161,24 @@ func _SellerService_UpdateSeller_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SellerService_UploadAvatar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadAvatarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SellerServiceServer).UploadAvatar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/seller.v1.SellerService/UploadAvatar",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SellerServiceServer).UploadAvatar(ctx, req.(*UploadAvatarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _SellerService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "seller.v1.SellerService",
 	HandlerType: (*SellerServiceServer)(nil),
@@ -162,6 +194,10 @@ var _SellerService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSeller",
 			Handler:    _SellerService_UpdateSeller_Handler,
+		},
+		{
+			MethodName: "UploadAvatar",
+			Handler:    _SellerService_UploadAvatar_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
