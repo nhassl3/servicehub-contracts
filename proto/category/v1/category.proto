@@ -12,12 +12,28 @@ service CategoryService {
       get: "/api/v1/categories"
     };
   }
+
+  rpc UploadAvatar(UploadAvatarRequest) returns (UploadAvatarResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/categories/uploadavatar"
+      body: "*"
+    };
+  }
 }
 
 message ListCategoriesRequest {}
 
 message ListCategoriesResponse {
   repeated Category categories = 1;
+}
+
+message UploadAvatarRequest {
+  bytes file_data = 1;
+  string content_type = 2;
+}
+
+message UploadAvatarResponse {
+  Category category = 1;
 }
 
 message Category {

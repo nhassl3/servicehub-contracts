@@ -27,6 +27,13 @@ service UserService {
       body: "*"
     };
   }
+
+  rpc UploadAvatar(UploadAvatarRequest) returns (UploadAvatarResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/users/me/uploadavatar"
+      body: "*"
+    };
+  }
 }
 
 message GetUserRequest {
@@ -52,6 +59,15 @@ message UpdatePasswordRequest {
 }
 
 message UpdatePasswordResponse {
+  UserProfile user = 1;
+}
+
+message UploadAvatarRequest {
+  bytes file_data = 1;
+  string content_type = 2;
+}
+
+message UploadAvatarResponse {
   UserProfile user = 1;
 }
 

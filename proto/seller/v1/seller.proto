@@ -27,6 +27,13 @@ service SellerService {
       body: "*"
     };
   }
+
+  rpc UploadAvatar(UploadAvatarRequest) returns (UploadAvatarResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/sellers/uploadavatar"
+      body: "*"
+    };
+  }
 }
 
 message CreateSellerRequest {
@@ -54,6 +61,15 @@ message UpdateSellerRequest {
 }
 
 message UpdateSellerResponse {
+  SellerProfile seller = 1;
+}
+
+message UploadAvatarRequest {
+  bytes file_data = 1;
+  string content_type = 2;
+}
+
+message UploadAvatarResponse {
   SellerProfile seller = 1;
 }
 
