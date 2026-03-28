@@ -28,8 +28,9 @@ message ListCategoriesResponse {
 }
 
 message UploadAvatarRequest {
-  bytes file_data = 1;
-  string content_type = 2;
+  string slug = 1;
+  bytes file_data = 2;
+  string content_type = 3;
 }
 
 message UploadAvatarResponse {
