@@ -295,6 +295,8 @@ func (m *UploadAvatarRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Slug
+
 	// no validation rules for FileData
 
 	// no validation rules for ContentType
