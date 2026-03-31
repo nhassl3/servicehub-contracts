@@ -1241,6 +1241,8 @@ func (m *AdminProfile) validate(all bool) error {
 
 	// no validation rules for TotalModeration
 
+	// no validation rules for AvatarUrl
+
 	if all {
 		switch v := interface{}(m.GetCreatedAt()).(type) {
 		case interface{ ValidateAll() error }:
