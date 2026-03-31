@@ -93,6 +93,7 @@ message AdminProfile {
   string                    display_name = 3;
   uint32                    level_rights = 4;
   uint32                    total_moderation  = 5;
+  string                    avatar_url = 8;
   google.protobuf.Timestamp created_at   = 6;
   google.protobuf.Timestamp updated_at   = 7;
 }
