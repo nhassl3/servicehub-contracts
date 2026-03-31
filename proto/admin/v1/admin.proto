@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package admin.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/admin/v1;adminv1";
+
+service AdminService {
+  rpc CreateAdmin(CreateAdminRequest) returns (CreateAdminResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/admins"
+      body: "*"
+    };
+  }
+
+  rpc GetAdminProfile(GetAdminProfileRequest) returns (GetAdminProfileResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/admins"
+    };
+  }
+
+  rpc UpdateAdminProfile(UpdateAdminProfileRequest) returns (UpdateAdminProfileResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/admins/me"
+      body: "*"
+    };
+  }
+
+  rpc IncreaseTotalModerates(IncreaseAdminModeratesRequest) returns (IncreaseAdminModeratesResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/admin/me/increase"
+      body: "*"
+    };
+  }
+
+  rpc UploadAvatar(UploadAvatarRequest) returns (UploadAvatarResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/admins/me/uploadavatar"
+      body: "*"
+    };
+  }
+}
+
+message CreateAdminRequest {
+  string display_name = 1;
+  optional uint32 level_rights = 2;
+}
+
+message CreateAdminResponse {
+  AdminProfile admin = 1;
+}
+
+message GetAdminProfileRequest {
+  optional string username = 1;
+  optional string admin_id   = 2;
+}
+
+message GetAdminProfileResponse {
+  AdminProfile admin = 1;
+}
+
+message UpdateAdminProfileRequest {
+  optional string display_name = 1;
+  optional string avatar_url   = 2;
+  optional uint32 level_rights = 3;
+  optional uint32 total_moderation = 4; // if count of moderates needed to decrease
+}
+
+message UpdateAdminProfileResponse {
+  AdminProfile admin = 1;
+}
+
+message IncreaseAdminModeratesRequest {
+  uint32 total_moderation = 1;
+}
+
+message IncreaseAdminModeratesResponse {}
+
+message UploadAvatarRequest {
+  bytes file_data = 1;
+  string content_type = 2;
+}
+
+message UploadAvatarResponse {
+  AdminProfile admin = 1;
+}
+
+message AdminProfile {
+  string                    id           = 1;
+  string                    username     = 2;
+  string                    display_name = 3;
+  uint32                    level_rights = 4;
+  uint32                    total_moderation  = 5;
+  google.protobuf.Timestamp created_at   = 6;
+  google.protobuf.Timestamp updated_at   = 7;
+}
