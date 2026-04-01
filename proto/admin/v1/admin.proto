@@ -45,7 +45,7 @@ service AdminService {
 
 message CreateAdminRequest {
   string display_name = 1;
-  optional uint32 level_rights = 2;
+  optional int32 level_rights = 2;
 }
 
 message CreateAdminResponse {
@@ -64,8 +64,8 @@ message GetAdminProfileResponse {
 message UpdateAdminProfileRequest {
   optional string display_name = 1;
   optional string avatar_url   = 2;
-  optional uint32 level_rights = 3;
-  optional uint32 total_moderation = 4; // if count of moderates needed to decrease
+  optional int32 level_rights = 3;
+  optional int32 total_moderation = 4; // if count of moderates needed to decrease
 }
 
 message UpdateAdminProfileResponse {
@@ -73,7 +73,7 @@ message UpdateAdminProfileResponse {
 }
 
 message IncreaseAdminModeratesRequest {
-  uint32 total_moderation = 1;
+  int32 total_moderation = 1;
 }
 
 message IncreaseAdminModeratesResponse {}
@@ -91,8 +91,8 @@ message AdminProfile {
   string                    id           = 1;
   string                    username     = 2;
   string                    display_name = 3;
-  uint32                    level_rights = 4;
-  uint32                    total_moderation  = 5;
+  int32                    level_rights = 4;
+  int32                    total_moderation  = 5;
   string                    avatar_url = 8;
   google.protobuf.Timestamp created_at   = 6;
   google.protobuf.Timestamp updated_at   = 7;
