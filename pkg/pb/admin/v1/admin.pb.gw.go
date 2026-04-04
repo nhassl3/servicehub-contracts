@@ -250,7 +250,7 @@ func RegisterAdminServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/admin.v1.AdminService/IncreaseTotalModerates", runtime.WithHTTPPathPattern("/api/v1/admin/me/increase"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/admin.v1.AdminService/IncreaseTotalModerates", runtime.WithHTTPPathPattern("/api/v1/admins/me/increase"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -379,7 +379,7 @@ func RegisterAdminServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/admin.v1.AdminService/IncreaseTotalModerates", runtime.WithHTTPPathPattern("/api/v1/admin/me/increase"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/admin.v1.AdminService/IncreaseTotalModerates", runtime.WithHTTPPathPattern("/api/v1/admins/me/increase"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -416,7 +416,7 @@ var (
 	pattern_AdminService_CreateAdmin_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "admins"}, ""))
 	pattern_AdminService_GetAdminProfile_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "admins"}, ""))
 	pattern_AdminService_UpdateAdminProfile_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "admins", "me"}, ""))
-	pattern_AdminService_IncreaseTotalModerates_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "admin", "me", "increase"}, ""))
+	pattern_AdminService_IncreaseTotalModerates_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "admins", "me", "increase"}, ""))
 	pattern_AdminService_UploadAvatar_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "admins", "me", "uploadavatar"}, ""))
 )
 
