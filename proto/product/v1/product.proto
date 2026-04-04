@@ -50,7 +50,7 @@ service ProductService {
 message ListProductsRequest {
   optional int32  category_id = 1;
   optional string seller_id   = 2;
-  optional string admin_Id    = 7;
+  optional string admin_id    = 7;
   optional double min_price   = 3;
   optional double max_price   = 4;
   int32           limit       = 5;
