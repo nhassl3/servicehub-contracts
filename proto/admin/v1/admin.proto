@@ -30,7 +30,7 @@ service AdminService {
 
   rpc IncreaseTotalModerates(IncreaseAdminModeratesRequest) returns (IncreaseAdminModeratesResponse) {
     option (google.api.http) = {
-      patch: "/api/v1/admin/me/increase"
+      patch: "/api/v1/admins/me/increase"
       body: "*"
     };
   }
