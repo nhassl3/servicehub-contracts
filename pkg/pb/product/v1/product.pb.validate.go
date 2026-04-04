@@ -69,8 +69,8 @@ func (m *ListProductsRequest) validate(all bool) error {
 		// no validation rules for SellerId
 	}
 
-	if m.Admin_Id != nil {
-		// no validation rules for Admin_Id
+	if m.AdminId != nil {
+		// no validation rules for AdminId
 	}
 
 	if m.MinPrice != nil {
