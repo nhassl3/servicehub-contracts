@@ -5,7 +5,7 @@ package user.v1;
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/nhassl3/servicehub/internal/pb/user/v1;userv1";
+option go_package = "github.com/nhassl3/servicehub/pkg/pb/user/v1;userv1";
 
 service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {

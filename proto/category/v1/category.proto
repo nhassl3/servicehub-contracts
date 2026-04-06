@@ -4,7 +4,7 @@ package category.v1;
 
 import "googleapis/google/api/annotations.proto";
 
-option go_package = "github.com/nhassl3/servicehub/internal/pb/category/v1;categoryv1";
+option go_package = "github.com/nhassl3/servicehub/pkg/pb/category/v1;categoryv1";
 
 service CategoryService {
   rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse) {

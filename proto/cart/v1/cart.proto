@@ -4,7 +4,7 @@ package cart.v1;
 
 import "googleapis/google/api/annotations.proto";
 
-option go_package = "github.com/nhassl3/servicehub/internal/pb/cart/v1;cartv1";
+option go_package = "github.com/nhassl3/servicehub/pkg/pb/cart/v1;cartv1";
 
 service CartService {
   rpc GetCart(GetCartRequest) returns (GetCartResponse) {

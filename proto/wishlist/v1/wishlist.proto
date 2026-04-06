@@ -5,7 +5,7 @@ package wishlist.v1;
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/nhassl3/servicehub/internal/pb/wishlist/v1;wishlistv1";
+option go_package = "github.com/nhassl3/servicehub/pkg/pb/wishlist/v1;wishlistv1";
 
 service WishlistService {
   rpc GetWishlist(GetWishlistRequest) returns (GetWishlistResponse) {
