@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package moderation.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub/internal/pb/Moderation/v1;moderationv1";
+
+service ModerationService {
+  rpc CreateModeration(CreateModerationRequest) returns (CreateModerationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/moderation"
+      body: "*"
+    };
+  }
+
+  rpc GetModeration(GetModerationRequest) returns (GetModerationResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/moderation"
+    };
+  }
+
+  rpc UpdateModeration(UpdateModerationRequest) returns (UpdateModerationResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/moderation/update"
+      body: "*"
+    };
+  }
+
+  rpc ListModeration(ListModerationRequest) returns (ListModerationResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/moderation/list"
+    };
+  }
+}
+
+message CreateModerationRequest {
+  string product_id = 1;
+  string admin_id   = 2;
+  bool   active     = 3;
+}
+
+message CreateModerationResponse {
+  Moderation moderation = 1;
+}
+
+message GetModerationRequest {
+  string moderation_id = 2;
+}
+
+message GetModerationResponse {
+  Moderation Moderation = 1;
+}
+
+message UpdateModerationRequest {
+  string          id       = 1;
+  bool            active   = 2;
+  optional string admin_id = 3;
+}
+
+message UpdateModerationResponse {
+  Moderation moderation = 1;
+}
+
+message ListModerationRequest {
+  string admin_id = 1;
+  int32 limit     = 2;
+  int32 offset    = 3;
+}
+
+message ListModerationResponse {
+  repeated Moderation moderation = 1;
+}
+
+message Moderation {
+  string                    id           = 1;
+  string                    admin_id     = 2;
+  string                    product_id   = 3;
+  bool                      active       = 4;
+  google.protobuf.Timestamp created_at   = 6;
+  google.protobuf.Timestamp updated_at   = 7;
+}
