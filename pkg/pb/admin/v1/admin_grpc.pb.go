@@ -22,6 +22,7 @@ type AdminServiceClient interface {
 	UpdateAdminProfile(ctx context.Context, in *UpdateAdminProfileRequest, opts ...grpc.CallOption) (*UpdateAdminProfileResponse, error)
 	IncreaseTotalModerates(ctx context.Context, in *IncreaseAdminModeratesRequest, opts ...grpc.CallOption) (*IncreaseAdminModeratesResponse, error)
 	UploadAvatar(ctx context.Context, in *UploadAvatarRequest, opts ...grpc.CallOption) (*UploadAvatarResponse, error)
+	GetModeratedProducts(ctx context.Context, in *GetModeratedProductsRequest, opts ...grpc.CallOption) (*GetModeratedProductsResponse, error)
 }
 
 type adminServiceClient struct {
@@ -77,6 +78,15 @@ func (c *adminServiceClient) UploadAvatar(ctx context.Context, in *UploadAvatarR
 	return out, nil
 }
 
+func (c *adminServiceClient) GetModeratedProducts(ctx context.Context, in *GetModeratedProductsRequest, opts ...grpc.CallOption) (*GetModeratedProductsResponse, error) {
+	out := new(GetModeratedProductsResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.AdminService/GetModeratedProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility
@@ -86,6 +96,7 @@ type AdminServiceServer interface {
 	UpdateAdminProfile(context.Context, *UpdateAdminProfileRequest) (*UpdateAdminProfileResponse, error)
 	IncreaseTotalModerates(context.Context, *IncreaseAdminModeratesRequest) (*IncreaseAdminModeratesResponse, error)
 	UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error)
+	GetModeratedProducts(context.Context, *GetModeratedProductsRequest) (*GetModeratedProductsResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -107,6 +118,9 @@ func (UnimplementedAdminServiceServer) IncreaseTotalModerates(context.Context, *
 }
 func (UnimplementedAdminServiceServer) UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadAvatar not implemented")
+}
+func (UnimplementedAdminServiceServer) GetModeratedProducts(context.Context, *GetModeratedProductsRequest) (*GetModeratedProductsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetModeratedProducts not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 
@@ -211,6 +225,24 @@ func _AdminService_UploadAvatar_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_GetModeratedProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetModeratedProductsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).GetModeratedProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.AdminService/GetModeratedProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).GetModeratedProducts(ctx, req.(*GetModeratedProductsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AdminService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "admin.v1.AdminService",
 	HandlerType: (*AdminServiceServer)(nil),
@@ -234,6 +266,10 @@ var _AdminService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadAvatar",
 			Handler:    _AdminService_UploadAvatar_Handler,
+		},
+		{
+			MethodName: "GetModeratedProducts",
+			Handler:    _AdminService_GetModeratedProducts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

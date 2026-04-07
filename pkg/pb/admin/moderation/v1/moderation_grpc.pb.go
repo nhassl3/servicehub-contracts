@@ -20,7 +20,13 @@ type ModerationServiceClient interface {
 	CreateModeration(ctx context.Context, in *CreateModerationRequest, opts ...grpc.CallOption) (*CreateModerationResponse, error)
 	GetModeration(ctx context.Context, in *GetModerationRequest, opts ...grpc.CallOption) (*GetModerationResponse, error)
 	UpdateModeration(ctx context.Context, in *UpdateModerationRequest, opts ...grpc.CallOption) (*UpdateModerationResponse, error)
-	ListModeration(ctx context.Context, in *ListModerationRequest, opts ...grpc.CallOption) (*ListModerationResponse, error)
+	MyReviews(ctx context.Context, in *MyReviewsRequest, opts ...grpc.CallOption) (*MyReviewsResponse, error)
+	Queue(ctx context.Context, in *QueueRequest, opts ...grpc.CallOption) (*QueueResponse, error)
+	Claim(ctx context.Context, in *ClaimRequest, opts ...grpc.CallOption) (*ClaimResponse, error)
+	Release(ctx context.Context, in *ReleaseRequest, opts ...grpc.CallOption) (*ReleaseResponse, error)
+	Approve(ctx context.Context, in *ApproveRequest, opts ...grpc.CallOption) (*ApproveResponse, error)
+	Reject(ctx context.Context, in *RejectRequest, opts ...grpc.CallOption) (*RejectResponse, error)
+	Stats(ctx context.Context, in *StatsRequest, opts ...grpc.CallOption) (*StatsResponse, error)
 }
 
 type moderationServiceClient struct {
@@ -33,7 +39,7 @@ func NewModerationServiceClient(cc grpc.ClientConnInterface) ModerationServiceCl
 
 func (c *moderationServiceClient) CreateModeration(ctx context.Context, in *CreateModerationRequest, opts ...grpc.CallOption) (*CreateModerationResponse, error) {
 	out := new(CreateModerationResponse)
-	err := c.cc.Invoke(ctx, "/moderation.v1.ModerationService/CreateModeration", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/CreateModeration", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +48,7 @@ func (c *moderationServiceClient) CreateModeration(ctx context.Context, in *Crea
 
 func (c *moderationServiceClient) GetModeration(ctx context.Context, in *GetModerationRequest, opts ...grpc.CallOption) (*GetModerationResponse, error) {
 	out := new(GetModerationResponse)
-	err := c.cc.Invoke(ctx, "/moderation.v1.ModerationService/GetModeration", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/GetModeration", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,16 +57,70 @@ func (c *moderationServiceClient) GetModeration(ctx context.Context, in *GetMode
 
 func (c *moderationServiceClient) UpdateModeration(ctx context.Context, in *UpdateModerationRequest, opts ...grpc.CallOption) (*UpdateModerationResponse, error) {
 	out := new(UpdateModerationResponse)
-	err := c.cc.Invoke(ctx, "/moderation.v1.ModerationService/UpdateModeration", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/UpdateModeration", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *moderationServiceClient) ListModeration(ctx context.Context, in *ListModerationRequest, opts ...grpc.CallOption) (*ListModerationResponse, error) {
-	out := new(ListModerationResponse)
-	err := c.cc.Invoke(ctx, "/moderation.v1.ModerationService/ListModeration", in, out, opts...)
+func (c *moderationServiceClient) MyReviews(ctx context.Context, in *MyReviewsRequest, opts ...grpc.CallOption) (*MyReviewsResponse, error) {
+	out := new(MyReviewsResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/MyReviews", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *moderationServiceClient) Queue(ctx context.Context, in *QueueRequest, opts ...grpc.CallOption) (*QueueResponse, error) {
+	out := new(QueueResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/Queue", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *moderationServiceClient) Claim(ctx context.Context, in *ClaimRequest, opts ...grpc.CallOption) (*ClaimResponse, error) {
+	out := new(ClaimResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/Claim", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *moderationServiceClient) Release(ctx context.Context, in *ReleaseRequest, opts ...grpc.CallOption) (*ReleaseResponse, error) {
+	out := new(ReleaseResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/Release", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *moderationServiceClient) Approve(ctx context.Context, in *ApproveRequest, opts ...grpc.CallOption) (*ApproveResponse, error) {
+	out := new(ApproveResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/Approve", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *moderationServiceClient) Reject(ctx context.Context, in *RejectRequest, opts ...grpc.CallOption) (*RejectResponse, error) {
+	out := new(RejectResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/Reject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *moderationServiceClient) Stats(ctx context.Context, in *StatsRequest, opts ...grpc.CallOption) (*StatsResponse, error) {
+	out := new(StatsResponse)
+	err := c.cc.Invoke(ctx, "/admin.v1.ModerationService/Stats", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +134,13 @@ type ModerationServiceServer interface {
 	CreateModeration(context.Context, *CreateModerationRequest) (*CreateModerationResponse, error)
 	GetModeration(context.Context, *GetModerationRequest) (*GetModerationResponse, error)
 	UpdateModeration(context.Context, *UpdateModerationRequest) (*UpdateModerationResponse, error)
-	ListModeration(context.Context, *ListModerationRequest) (*ListModerationResponse, error)
+	MyReviews(context.Context, *MyReviewsRequest) (*MyReviewsResponse, error)
+	Queue(context.Context, *QueueRequest) (*QueueResponse, error)
+	Claim(context.Context, *ClaimRequest) (*ClaimResponse, error)
+	Release(context.Context, *ReleaseRequest) (*ReleaseResponse, error)
+	Approve(context.Context, *ApproveRequest) (*ApproveResponse, error)
+	Reject(context.Context, *RejectRequest) (*RejectResponse, error)
+	Stats(context.Context, *StatsRequest) (*StatsResponse, error)
 	mustEmbedUnimplementedModerationServiceServer()
 }
 
@@ -91,8 +157,26 @@ func (UnimplementedModerationServiceServer) GetModeration(context.Context, *GetM
 func (UnimplementedModerationServiceServer) UpdateModeration(context.Context, *UpdateModerationRequest) (*UpdateModerationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateModeration not implemented")
 }
-func (UnimplementedModerationServiceServer) ListModeration(context.Context, *ListModerationRequest) (*ListModerationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListModeration not implemented")
+func (UnimplementedModerationServiceServer) MyReviews(context.Context, *MyReviewsRequest) (*MyReviewsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MyReviews not implemented")
+}
+func (UnimplementedModerationServiceServer) Queue(context.Context, *QueueRequest) (*QueueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Queue not implemented")
+}
+func (UnimplementedModerationServiceServer) Claim(context.Context, *ClaimRequest) (*ClaimResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Claim not implemented")
+}
+func (UnimplementedModerationServiceServer) Release(context.Context, *ReleaseRequest) (*ReleaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Release not implemented")
+}
+func (UnimplementedModerationServiceServer) Approve(context.Context, *ApproveRequest) (*ApproveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Approve not implemented")
+}
+func (UnimplementedModerationServiceServer) Reject(context.Context, *RejectRequest) (*RejectResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Reject not implemented")
+}
+func (UnimplementedModerationServiceServer) Stats(context.Context, *StatsRequest) (*StatsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Stats not implemented")
 }
 func (UnimplementedModerationServiceServer) mustEmbedUnimplementedModerationServiceServer() {}
 
@@ -117,7 +201,7 @@ func _ModerationService_CreateModeration_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moderation.v1.ModerationService/CreateModeration",
+		FullMethod: "/admin.v1.ModerationService/CreateModeration",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ModerationServiceServer).CreateModeration(ctx, req.(*CreateModerationRequest))
@@ -135,7 +219,7 @@ func _ModerationService_GetModeration_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moderation.v1.ModerationService/GetModeration",
+		FullMethod: "/admin.v1.ModerationService/GetModeration",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ModerationServiceServer).GetModeration(ctx, req.(*GetModerationRequest))
@@ -153,7 +237,7 @@ func _ModerationService_UpdateModeration_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moderation.v1.ModerationService/UpdateModeration",
+		FullMethod: "/admin.v1.ModerationService/UpdateModeration",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ModerationServiceServer).UpdateModeration(ctx, req.(*UpdateModerationRequest))
@@ -161,26 +245,134 @@ func _ModerationService_UpdateModeration_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ModerationService_ListModeration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListModerationRequest)
+func _ModerationService_MyReviews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MyReviewsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ModerationServiceServer).ListModeration(ctx, in)
+		return srv.(ModerationServiceServer).MyReviews(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moderation.v1.ModerationService/ListModeration",
+		FullMethod: "/admin.v1.ModerationService/MyReviews",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ModerationServiceServer).ListModeration(ctx, req.(*ListModerationRequest))
+		return srv.(ModerationServiceServer).MyReviews(ctx, req.(*MyReviewsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ModerationService_Queue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ModerationServiceServer).Queue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.ModerationService/Queue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ModerationServiceServer).Queue(ctx, req.(*QueueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ModerationService_Claim_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClaimRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ModerationServiceServer).Claim(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.ModerationService/Claim",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ModerationServiceServer).Claim(ctx, req.(*ClaimRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ModerationService_Release_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReleaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ModerationServiceServer).Release(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.ModerationService/Release",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ModerationServiceServer).Release(ctx, req.(*ReleaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ModerationService_Approve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApproveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ModerationServiceServer).Approve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.ModerationService/Approve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ModerationServiceServer).Approve(ctx, req.(*ApproveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ModerationService_Reject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RejectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ModerationServiceServer).Reject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.ModerationService/Reject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ModerationServiceServer).Reject(ctx, req.(*RejectRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ModerationService_Stats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ModerationServiceServer).Stats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.ModerationService/Stats",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ModerationServiceServer).Stats(ctx, req.(*StatsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 var _ModerationService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "moderation.v1.ModerationService",
+	ServiceName: "admin.v1.ModerationService",
 	HandlerType: (*ModerationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -196,8 +388,32 @@ var _ModerationService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _ModerationService_UpdateModeration_Handler,
 		},
 		{
-			MethodName: "ListModeration",
-			Handler:    _ModerationService_ListModeration_Handler,
+			MethodName: "MyReviews",
+			Handler:    _ModerationService_MyReviews_Handler,
+		},
+		{
+			MethodName: "Queue",
+			Handler:    _ModerationService_Queue_Handler,
+		},
+		{
+			MethodName: "Claim",
+			Handler:    _ModerationService_Claim_Handler,
+		},
+		{
+			MethodName: "Release",
+			Handler:    _ModerationService_Release_Handler,
+		},
+		{
+			MethodName: "Approve",
+			Handler:    _ModerationService_Approve_Handler,
+		},
+		{
+			MethodName: "Reject",
+			Handler:    _ModerationService_Reject_Handler,
+		},
+		{
+			MethodName: "Stats",
+			Handler:    _ModerationService_Stats_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
