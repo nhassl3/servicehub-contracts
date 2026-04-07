@@ -1,9 +1,10 @@
 syntax = "proto3";
 
-package moderation.v1;
+package admin.v1;
 
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "product/v1/product.proto";
 
 option go_package = "github.com/nhassl3/servicehub/pkg/pb/admin/moderation/v1;moderationv1";
 
@@ -28,11 +29,101 @@ service ModerationService {
     };
   }
 
-  rpc ListModeration(ListModerationRequest) returns (ListModerationResponse) {
+  rpc MyReviews(MyReviewsRequest) returns (MyReviewsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/moderation/list"
+      get: "/api/v1/moderation/my"
     };
   }
+
+  rpc Queue(QueueRequest) returns (QueueResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/moderation/queue"
+    };
+  }
+
+  rpc Claim(ClaimRequest) returns (ClaimResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/moderation/claim"
+      body: "*"
+    };
+  }
+
+  rpc Release(ReleaseRequest) returns (ReleaseResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/moderation/release"
+      body: "*"
+    };
+  }
+
+  rpc Approve(ApproveRequest) returns (ApproveResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/moderation/approve"
+      body: "*"
+    };
+  }
+
+  rpc Reject(RejectRequest) returns (RejectResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/moderation/reject"
+      body: "*"
+    };
+  }
+
+  rpc Stats(StatsRequest) returns (StatsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/moderation/stats"
+    };
+  }
+}
+
+message StatsRequest {}
+
+message StatsResponse {
+  int32 total_pending  = 1;
+  int32 total_claimed  = 2;
+  int32 total_approved = 3;
+  int32 total_rejected = 4;
+}
+
+message RejectRequest {
+  string product_id = 1;
+  string reason     = 2;
+}
+
+message RejectResponse {
+  product.v1.Product product = 1;
+}
+
+message ApproveRequest {
+  string product_id = 1;
+}
+
+message ApproveResponse {
+  product.v1.Product product = 1;
+}
+
+message ReleaseRequest {
+  string product_id = 1;
+}
+
+message ReleaseResponse {}
+
+message ClaimRequest {
+  string product_id = 1;
+}
+
+message ClaimResponse {
+  Moderation moderation = 1;
+}
+
+message QueueRequest {
+  int32 limit  = 1;
+  int32 offset = 2;
+}
+
+message QueueResponse {
+  repeated QueueProduct products = 1;
+  int32                 total    = 2;
 }
 
 message CreateModerationRequest {
@@ -63,21 +154,27 @@ message UpdateModerationResponse {
   Moderation moderation = 1;
 }
 
-message ListModerationRequest {
-  string admin_id = 1;
+message MyReviewsRequest {
   int32 limit     = 2;
   int32 offset    = 3;
 }
 
-message ListModerationResponse {
-  repeated Moderation moderation = 1;
+message MyReviewsResponse {
+  repeated QueueProduct products = 1;
+  int32    total                 = 2;
 }
 
 message Moderation {
-  string                    id           = 1;
-  string                    admin_id     = 2;
-  string                    product_id   = 3;
-  bool                      active       = 4;
-  google.protobuf.Timestamp created_at   = 6;
-  google.protobuf.Timestamp updated_at   = 7;
+  string                    id             = 1;
+  string                    admin_id       = 2;
+  string                    product_id     = 4;
+  string                    admin_username = 3;
+  bool                      active         = 5;
+  google.protobuf.Timestamp created_at     = 6;
+  google.protobuf.Timestamp updated_at     = 7;
+}
+
+message QueueProduct {
+  product.v1.Product product    = 1;
+  Moderation         moderation = 2;
 }
