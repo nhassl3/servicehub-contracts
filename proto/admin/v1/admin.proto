@@ -4,9 +4,9 @@ package admin.v1;
 
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
-import "admin/v1/moderation.proto";
+import "moderation/v1/moderation.proto";
 
-option go_package = "github.com/nhassl3/servicehub/pkg/pb/admin/v1;adminv1";
+option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/admin/v1;adminv1";
 
 service AdminService {
   rpc CreateAdmin(CreateAdminRequest) returns (CreateAdminResponse) {
@@ -71,7 +71,7 @@ message GetAdminProfileResponse {
 message GetModeratedProductsRequest {}
 
 message GetModeratedProductsResponse {
-  repeated QueueProduct products = 1;
+  repeated moderation.v1.QueueProduct products = 1;
 }
 
 message UpdateAdminProfileRequest {
