@@ -5,7 +5,7 @@ package review.v1;
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/review/v1;reviewv1";
+option go_package = "github.com/nhassl3/servicehub/pkg/pb/review/v1;reviewv1";
 
 service ReviewService {
   rpc ListReviews(ListReviewsRequest) returns (ListReviewsResponse) {

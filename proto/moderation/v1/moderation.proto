@@ -6,7 +6,7 @@ import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "product/v1/product.proto";
 
-option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/moderation/v1;moderationv1";
+option go_package = "github.com/nhassl3/servicehub/pkg/pb/moderation/v1;moderationv1";
 
 service ModerationService {
   rpc CreateModeration(CreateModerationRequest) returns (CreateModerationResponse) {
