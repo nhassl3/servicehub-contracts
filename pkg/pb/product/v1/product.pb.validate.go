@@ -1041,13 +1041,21 @@ func (m *UpdateProductRequest) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for Title
+	if m.Title != nil {
+		// no validation rules for Title
+	}
 
-	// no validation rules for Description
+	if m.Description != nil {
+		// no validation rules for Description
+	}
 
-	// no validation rules for Price
+	if m.Price != nil {
+		// no validation rules for Price
+	}
 
-	// no validation rules for Status
+	if m.Status != nil {
+		// no validation rules for Status
+	}
 
 	if len(errors) > 0 {
 		return UpdateProductRequestMultiError(errors)
