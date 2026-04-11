@@ -158,8 +158,6 @@ func (m *StatsResponse) validate(all bool) error {
 
 	// no validation rules for TotalPending
 
-	// no validation rules for TotalClaimed
-
 	// no validation rules for TotalApproved
 
 	// no validation rules for TotalRejected
