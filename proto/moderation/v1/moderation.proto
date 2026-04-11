@@ -80,9 +80,8 @@ message StatsRequest {}
 
 message StatsResponse {
   int32 total_pending  = 1;
-  int32 total_claimed  = 2;
-  int32 total_approved = 3;
-  int32 total_rejected = 4;
+  int32 total_approved = 2;
+  int32 total_rejected = 3;
 }
 
 message RejectRequest {

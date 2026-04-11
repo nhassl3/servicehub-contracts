@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package notification.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/notification/v1;notificationv1";
+
+service NotificationService {
+  rpc CreateNotification(CreateNotificationRequest) returns (CreateNotificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/notification"
+      body: "*"
+    };
+  }
+
+  rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/notification"
+    };
+  }
+
+  rpc ListNotification(ListNotificationRequest) returns (ListNotificationResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/notifications"
+    };
+  }
+}
+
+message CreateNotificationRequest {
+  string username = 1;
+  string notification_message = 2;
+  string group_slug = 3;
+}
+
+message CreateNotificationResponse {
+  string id = 1;
+}
+
+message GetNotificationRequest {
+  string id = 1;
+}
+
+message GetNotificationResponse {
+  Notification notification = 1;
+}
+
+message ListNotificationRequest {
+  optional string to_user_id = 1;
+  optional string to_user_username = 2;
+}
+
+message ListNotificationResponse {
+  repeated Notification notifications = 1;
+}
+
+message Notification {
+  string id = 1;
+  string notification_message = 2;
+  optional string to_user_username = 3;
+  optional string to_user_id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
