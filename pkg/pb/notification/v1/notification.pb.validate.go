@@ -504,6 +504,8 @@ func (m *ListNotificationRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Offset
+
 	if m.ToUserId != nil {
 		// no validation rules for ToUserId
 	}
