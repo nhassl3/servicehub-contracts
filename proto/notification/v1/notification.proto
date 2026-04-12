@@ -57,9 +57,9 @@ message ListNotificationResponse {
 
 message Notification {
   string id = 1;
-  string notification_message = 2;
-  optional string to_user_username = 3;
-  optional string to_user_id = 4;
+  string message = 2;
+  string username = 3;
+  string group_slug = 4;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
 }
