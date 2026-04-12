@@ -752,7 +752,11 @@ func (m *Notification) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for NotificationMessage
+	// no validation rules for Message
+
+	// no validation rules for Username
+
+	// no validation rules for GroupSlug
 
 	if all {
 		switch v := interface{}(m.GetCreatedAt()).(type) {
@@ -810,14 +814,6 @@ func (m *Notification) validate(all bool) error {
 				cause:  err,
 			}
 		}
-	}
-
-	if m.ToUserUsername != nil {
-		// no validation rules for ToUserUsername
-	}
-
-	if m.ToUserId != nil {
-		// no validation rules for ToUserId
 	}
 
 	if len(errors) > 0 {
