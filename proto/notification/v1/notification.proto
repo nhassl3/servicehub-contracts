@@ -47,6 +47,7 @@ message GetNotificationResponse {
 }
 
 message ListNotificationRequest {
+  int32 offset = 3;
   optional string to_user_id = 1;
   optional string to_user_username = 2;
 }
