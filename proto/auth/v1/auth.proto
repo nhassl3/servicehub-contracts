@@ -23,6 +23,13 @@ service AuthService {
     };
   }
 
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/reset-password"
+      body: "*"
+    };
+  }
+
   rpc Logout(LogoutRequest) returns (LogoutResponse) {
     option (google.api.http) = {
       post: "/api/v1/auth/logout"
@@ -90,6 +97,21 @@ message LoginResponse {
 message LogoutRequest {}
 
 message LogoutResponse {
+  bool success = 1;
+}
+
+message ResetPasswordRequest {
+  string old_password = 1 [(validate.rules).string = {
+    pattern: "^[a-zA-Z0-9!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?\\\\|`~]{8,}$",
+    min_len: 8,
+  }];
+  string password = 2 [(validate.rules).string = {
+    pattern: "^[a-zA-Z0-9!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?\\\\|`~]{8,}$",
+    min_len: 8,
+  }];
+}
+
+message ResetPasswordResponse {
   bool success = 1;
 }
 
