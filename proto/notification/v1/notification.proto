@@ -62,5 +62,4 @@ message Notification {
   string username = 3;
   string group_slug = 4;
   google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp updated_at = 6;
 }
