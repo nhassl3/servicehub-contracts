@@ -117,7 +117,9 @@ message RequestResetPasswordRequest {
   optional string email = 2 [(validate.rules).string.email = true];
 }
 
-message RequestResetPasswordResponse {}
+message RequestResetPasswordResponse {
+  string operation_id = 1;
+}
 
 message ResetPasswordRequest {
   string password = 2 [(validate.rules).string = {

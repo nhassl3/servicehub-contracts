@@ -1092,6 +1092,8 @@ func (m *RequestResetPasswordResponse) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for OperationId
+
 	if len(errors) > 0 {
 		return RequestResetPasswordResponseMultiError(errors)
 	}
