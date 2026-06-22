@@ -1197,6 +1197,8 @@ func (m *ResetPasswordRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for ResetToken
+
 	if utf8.RuneCountInString(m.GetPassword()) < 8 {
 		err := ResetPasswordRequestValidationError{
 			field:  "Password",
