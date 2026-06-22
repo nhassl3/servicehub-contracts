@@ -45,7 +45,7 @@ message ApproveCodeRequest {
 }
 
 message ApproveCodeResponse {
-  bool success = 1;
+  string reset_token = 1;
 }
 
 message CreateNotificationRequest {

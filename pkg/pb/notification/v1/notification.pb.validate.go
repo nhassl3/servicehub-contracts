@@ -186,7 +186,7 @@ func (m *ApproveCodeResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Success
+	// no validation rules for ResetToken
 
 	if len(errors) > 0 {
 		return ApproveCodeResponseMultiError(errors)
