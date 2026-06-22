@@ -80,6 +80,8 @@ func (m *ApproveCodeRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for OperationId
+
 	if len(errors) > 0 {
 		return ApproveCodeRequestMultiError(errors)
 	}
