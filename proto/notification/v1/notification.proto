@@ -41,6 +41,7 @@ message ApproveCodeRequest {
     pattern: "^\\d{6}$",
     len: 6,
   }];
+  string operation_id = 2;
 }
 
 message ApproveCodeResponse {
