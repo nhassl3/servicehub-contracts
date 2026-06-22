@@ -4,8 +4,8 @@
 
 # Proto
 PROTO_DIR  = ./proto
-PROTO_OUT  = ./pkg
-MODULE     = github.com/nhassl3/servicehub
+PROTO_OUT  = .
+MODULE     = github.com/nhassl3/servicehub-contracts
 
 # All .proto files except vendored dependencies (googleapis, validate)
 PROTO_FILES = $(shell find $(PROTO_DIR) -name "*.proto" \
