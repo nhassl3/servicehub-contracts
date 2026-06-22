@@ -35,6 +35,237 @@ var (
 	_ = sort.Sort
 )
 
+// Validate checks the field values on ApproveCodeRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ApproveCodeRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ApproveCodeRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ApproveCodeRequestMultiError, or nil if none found.
+func (m *ApproveCodeRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ApproveCodeRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetCode()) != 6 {
+		err := ApproveCodeRequestValidationError{
+			field:  "Code",
+			reason: "value length must be 6 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+
+	}
+
+	if !_ApproveCodeRequest_Code_Pattern.MatchString(m.GetCode()) {
+		err := ApproveCodeRequestValidationError{
+			field:  "Code",
+			reason: "value does not match regex pattern \"^\\\\d{6}$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ApproveCodeRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ApproveCodeRequestMultiError is an error wrapping multiple validation errors
+// returned by ApproveCodeRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ApproveCodeRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ApproveCodeRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ApproveCodeRequestMultiError) AllErrors() []error { return m }
+
+// ApproveCodeRequestValidationError is the validation error returned by
+// ApproveCodeRequest.Validate if the designated constraints aren't met.
+type ApproveCodeRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApproveCodeRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApproveCodeRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApproveCodeRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApproveCodeRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApproveCodeRequestValidationError) ErrorName() string {
+	return "ApproveCodeRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApproveCodeRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApproveCodeRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApproveCodeRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApproveCodeRequestValidationError{}
+
+var _ApproveCodeRequest_Code_Pattern = regexp.MustCompile("^\\d{6}$")
+
+// Validate checks the field values on ApproveCodeResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ApproveCodeResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ApproveCodeResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ApproveCodeResponseMultiError, or nil if none found.
+func (m *ApproveCodeResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ApproveCodeResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	if len(errors) > 0 {
+		return ApproveCodeResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ApproveCodeResponseMultiError is an error wrapping multiple validation
+// errors returned by ApproveCodeResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ApproveCodeResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ApproveCodeResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ApproveCodeResponseMultiError) AllErrors() []error { return m }
+
+// ApproveCodeResponseValidationError is the validation error returned by
+// ApproveCodeResponse.Validate if the designated constraints aren't met.
+type ApproveCodeResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApproveCodeResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApproveCodeResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApproveCodeResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApproveCodeResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApproveCodeResponseValidationError) ErrorName() string {
+	return "ApproveCodeResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApproveCodeResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApproveCodeResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApproveCodeResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApproveCodeResponseValidationError{}
+
 // Validate checks the field values on CreateNotificationRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.

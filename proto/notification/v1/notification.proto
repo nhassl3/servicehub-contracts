@@ -4,6 +4,7 @@ package notification.v1;
 
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/notification/v1;notificationv1";
 
@@ -26,6 +27,24 @@ service NotificationService {
       get: "/api/v1/notifications"
     };
   }
+
+  rpc ApproveCode(ApproveCodeRequest) returns (ApproveCodeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/notifications",
+      body: "*",
+    };
+  }
+}
+
+message ApproveCodeRequest {
+  string code = 1 [(validate.rules).string = {
+    pattern: "^\\d{6}$",
+    len: 6,
+  }];
+}
+
+message ApproveCodeResponse {
+  bool success = 1;
 }
 
 message CreateNotificationRequest {

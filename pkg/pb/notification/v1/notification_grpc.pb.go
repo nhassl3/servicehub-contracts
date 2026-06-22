@@ -20,6 +20,7 @@ type NotificationServiceClient interface {
 	CreateNotification(ctx context.Context, in *CreateNotificationRequest, opts ...grpc.CallOption) (*CreateNotificationResponse, error)
 	GetNotification(ctx context.Context, in *GetNotificationRequest, opts ...grpc.CallOption) (*GetNotificationResponse, error)
 	ListNotification(ctx context.Context, in *ListNotificationRequest, opts ...grpc.CallOption) (*ListNotificationResponse, error)
+	ApproveCode(ctx context.Context, in *ApproveCodeRequest, opts ...grpc.CallOption) (*ApproveCodeResponse, error)
 }
 
 type notificationServiceClient struct {
@@ -57,6 +58,15 @@ func (c *notificationServiceClient) ListNotification(ctx context.Context, in *Li
 	return out, nil
 }
 
+func (c *notificationServiceClient) ApproveCode(ctx context.Context, in *ApproveCodeRequest, opts ...grpc.CallOption) (*ApproveCodeResponse, error) {
+	out := new(ApproveCodeResponse)
+	err := c.cc.Invoke(ctx, "/notification.v1.NotificationService/ApproveCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NotificationServiceServer is the server API for NotificationService service.
 // All implementations must embed UnimplementedNotificationServiceServer
 // for forward compatibility
@@ -64,6 +74,7 @@ type NotificationServiceServer interface {
 	CreateNotification(context.Context, *CreateNotificationRequest) (*CreateNotificationResponse, error)
 	GetNotification(context.Context, *GetNotificationRequest) (*GetNotificationResponse, error)
 	ListNotification(context.Context, *ListNotificationRequest) (*ListNotificationResponse, error)
+	ApproveCode(context.Context, *ApproveCodeRequest) (*ApproveCodeResponse, error)
 	mustEmbedUnimplementedNotificationServiceServer()
 }
 
@@ -79,6 +90,9 @@ func (UnimplementedNotificationServiceServer) GetNotification(context.Context, *
 }
 func (UnimplementedNotificationServiceServer) ListNotification(context.Context, *ListNotificationRequest) (*ListNotificationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNotification not implemented")
+}
+func (UnimplementedNotificationServiceServer) ApproveCode(context.Context, *ApproveCodeRequest) (*ApproveCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApproveCode not implemented")
 }
 func (UnimplementedNotificationServiceServer) mustEmbedUnimplementedNotificationServiceServer() {}
 
@@ -147,6 +161,24 @@ func _NotificationService_ListNotification_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NotificationService_ApproveCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApproveCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NotificationServiceServer).ApproveCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/notification.v1.NotificationService/ApproveCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NotificationServiceServer).ApproveCode(ctx, req.(*ApproveCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _NotificationService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "notification.v1.NotificationService",
 	HandlerType: (*NotificationServiceServer)(nil),
@@ -162,6 +194,10 @@ var _NotificationService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListNotification",
 			Handler:    _NotificationService_ListNotification_Handler,
+		},
+		{
+			MethodName: "ApproveCode",
+			Handler:    _NotificationService_ApproveCode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
