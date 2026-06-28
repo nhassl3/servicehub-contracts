@@ -26,7 +26,7 @@ const (
 
 type RequestVerifyEmailRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         *string                `protobuf:"bytes,1,opt,name=email,proto3,oneof" json:"email,omitempty"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -62,8 +62,8 @@ func (*RequestVerifyEmailRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *RequestVerifyEmailRequest) GetEmail() string {
-	if x != nil && x.Email != nil {
-		return *x.Email
+	if x != nil {
+		return x.Email
 	}
 	return ""
 }
@@ -994,10 +994,9 @@ var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a'googleapis/google/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"I\n" +
-	"\x19RequestVerifyEmailRequest\x12\"\n" +
-	"\x05email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01H\x00R\x05email\x88\x01\x01B\b\n" +
-	"\x06_email\"?\n" +
+	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a'googleapis/google/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\":\n" +
+	"\x19RequestVerifyEmailRequest\x12\x1d\n" +
+	"\x05email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01R\x05email\"?\n" +
 	"\x1aRequestVerifyEmailResponse\x12!\n" +
 	"\foperation_id\x18\x01 \x01(\tR\voperationId\"7\n" +
 	"\x12VerifyEmailRequest\x12!\n" +
@@ -1136,7 +1135,6 @@ func file_auth_v1_auth_proto_init() {
 	if File_auth_v1_auth_proto != nil {
 		return
 	}
-	file_auth_v1_auth_proto_msgTypes[0].OneofWrappers = []any{}
 	file_auth_v1_auth_proto_msgTypes[10].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

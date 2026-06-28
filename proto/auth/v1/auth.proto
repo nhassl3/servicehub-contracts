@@ -73,7 +73,7 @@ service AuthService {
 }
 
 message RequestVerifyEmailRequest {
-  optional string email = 1 [(validate.rules).string.email = true];
+  string email = 1 [(validate.rules).string.email = true];
 }
 
 message RequestVerifyEmailResponse {

@@ -57,20 +57,16 @@ func (m *RequestVerifyEmailRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.Email != nil {
-
-		if err := m._validateEmail(m.GetEmail()); err != nil {
-			err = RequestVerifyEmailRequestValidationError{
-				field:  "Email",
-				reason: "value must be a valid email address",
-				cause:  err,
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if err := m._validateEmail(m.GetEmail()); err != nil {
+		err = RequestVerifyEmailRequestValidationError{
+			field:  "Email",
+			reason: "value must be a valid email address",
+			cause:  err,
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
