@@ -36,7 +36,14 @@ service NotificationService {
   }
 }
 
+enum StorageKey {
+  STORAGE_KEY_UNSPECIFIED=0;
+  RESET_PASSWORD=1;
+  VERIFY_EMAIL=2;
+}
+
 message ApproveCodeRequest {
+  StorageKey key = 3;
   string code = 1 [(validate.rules).string = {
     pattern: "^\\d{6}$",
     len: 6,

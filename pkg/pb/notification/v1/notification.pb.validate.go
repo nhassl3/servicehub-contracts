@@ -57,6 +57,8 @@ func (m *ApproveCodeRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Key
+
 	if utf8.RuneCountInString(m.GetCode()) != 6 {
 		err := ApproveCodeRequestValidationError{
 			field:  "Code",
