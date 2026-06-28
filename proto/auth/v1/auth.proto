@@ -37,6 +37,20 @@ service AuthService {
     };
   }
 
+  rpc RequestVerifyEmail(RequestVerifyEmailRequest) returns (RequestVerifyEmailResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/request-verify-email"
+      body: "*"
+    };
+  }
+
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/verify-email"
+      body: "*"
+    };
+  }
+
   rpc Logout(LogoutRequest) returns (LogoutResponse) {
     option (google.api.http) = {
       post: "/api/v1/auth/logout"
@@ -56,6 +70,27 @@ service AuthService {
       get: "/api/v1/auth/me"
     };
   }
+}
+
+message RequestVerifyEmailRequest {
+  optional string email = 1 [(validate.rules).string.email = true];
+}
+
+message RequestVerifyEmailResponse {
+  string operation_id = 1;
+}
+
+message VerifyEmailRequest {
+  string code = 1 [
+    (validate.rules).string = {
+      pattern: "^\\d{6}$"
+      len: 6
+    }
+  ];
+}
+
+message VerifyEmailResponse {
+  bool success = 1;
 }
 
 message RegisterRequest {
