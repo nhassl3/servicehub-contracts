@@ -114,7 +114,7 @@ func (x *RequestVerifyEmailResponse) GetOperationId() string {
 
 type VerifyEmailRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	VerifyToken   string                 `protobuf:"bytes,1,opt,name=verify_token,json=verifyToken,proto3" json:"verify_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -149,9 +149,9 @@ func (*VerifyEmailRequest) Descriptor() ([]byte, []int) {
 	return file_auth_v1_auth_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *VerifyEmailRequest) GetCode() string {
+func (x *VerifyEmailRequest) GetVerifyToken() string {
 	if x != nil {
-		return x.Code
+		return x.VerifyToken
 	}
 	return ""
 }
@@ -999,9 +999,9 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x05email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01H\x00R\x05email\x88\x01\x01B\b\n" +
 	"\x06_email\"?\n" +
 	"\x1aRequestVerifyEmailResponse\x12!\n" +
-	"\foperation_id\x18\x01 \x01(\tR\voperationId\";\n" +
-	"\x12VerifyEmailRequest\x12%\n" +
-	"\x04code\x18\x01 \x01(\tB\x11\xfaB\x0er\f2\a^\\d{6}$\x98\x01\x06R\x04code\"/\n" +
+	"\foperation_id\x18\x01 \x01(\tR\voperationId\"7\n" +
+	"\x12VerifyEmailRequest\x12!\n" +
+	"\fverify_token\x18\x01 \x01(\tR\vverifyToken\"/\n" +
 	"\x13VerifyEmailResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9d\x02\n" +
 	"\x0fRegisterRequest\x12G\n" +

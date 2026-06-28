@@ -329,28 +329,7 @@ func (m *VerifyEmailRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetCode()) != 6 {
-		err := VerifyEmailRequestValidationError{
-			field:  "Code",
-			reason: "value length must be 6 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-
-	}
-
-	if !_VerifyEmailRequest_Code_Pattern.MatchString(m.GetCode()) {
-		err := VerifyEmailRequestValidationError{
-			field:  "Code",
-			reason: "value does not match regex pattern \"^\\\\d{6}$\"",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for VerifyToken
 
 	if len(errors) > 0 {
 		return VerifyEmailRequestMultiError(errors)
@@ -431,8 +410,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = VerifyEmailRequestValidationError{}
-
-var _VerifyEmailRequest_Code_Pattern = regexp.MustCompile("^\\d{6}$")
 
 // Validate checks the field values on VerifyEmailResponse with the rules
 // defined in the proto definition for this message. If any rules are

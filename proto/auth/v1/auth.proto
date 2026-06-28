@@ -81,12 +81,7 @@ message RequestVerifyEmailResponse {
 }
 
 message VerifyEmailRequest {
-  string code = 1 [
-    (validate.rules).string = {
-      pattern: "^\\d{6}$"
-      len: 6
-    }
-  ];
+  string verify_token = 1;
 }
 
 message VerifyEmailResponse {
