@@ -158,6 +158,8 @@ func (x *VerifyEmailRequest) GetVerifyToken() string {
 
 type VerifyEmailResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccessToken   string                 `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	RefreshToken  string                 `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -191,6 +193,20 @@ func (x *VerifyEmailResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use VerifyEmailResponse.ProtoReflect.Descriptor instead.
 func (*VerifyEmailResponse) Descriptor() ([]byte, []int) {
 	return file_auth_v1_auth_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *VerifyEmailResponse) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
+}
+
+func (x *VerifyEmailResponse) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
 }
 
 func (x *VerifyEmailResponse) GetSuccess() bool {
@@ -1000,8 +1016,10 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x1aRequestVerifyEmailResponse\x12!\n" +
 	"\foperation_id\x18\x01 \x01(\tR\voperationId\"7\n" +
 	"\x12VerifyEmailRequest\x12!\n" +
-	"\fverify_token\x18\x01 \x01(\tR\vverifyToken\"/\n" +
-	"\x13VerifyEmailResponse\x12\x18\n" +
+	"\fverify_token\x18\x01 \x01(\tR\vverifyToken\"w\n" +
+	"\x13VerifyEmailResponse\x12!\n" +
+	"\faccess_token\x18\x02 \x01(\tR\vaccessToken\x12#\n" +
+	"\rrefresh_token\x18\x03 \x01(\tR\frefreshToken\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9d\x02\n" +
 	"\x0fRegisterRequest\x12G\n" +
 	"\busername\x18\x01 \x01(\tB+\xfaB(r&(\x80\x022!^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$R\busername\x12\x1d\n" +

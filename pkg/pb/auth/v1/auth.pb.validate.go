@@ -429,6 +429,10 @@ func (m *VerifyEmailResponse) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for AccessToken
+
+	// no validation rules for RefreshToken
+
 	// no validation rules for Success
 
 	if len(errors) > 0 {

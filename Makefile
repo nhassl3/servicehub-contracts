@@ -41,3 +41,6 @@ proto:
 
 evans:
 	@evans --path proto --proto auth/v1/auth.proto --host 127.0.0.1 -p 50051
+
+notification-evans:
+	@evans --path proto --proto notification/v1/notification.proto --host 127.0.0.1 -p 50051
