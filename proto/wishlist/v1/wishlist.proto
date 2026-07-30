@@ -14,9 +14,9 @@ service WishlistService {
     };
   }
 
-  rpc AddItem(AddItemRequest) returns (AddItemResponse) {
+  rpc ToggleWishlistItem(ToggleWishlistItemRequest) returns (ToggleWishlistItemResponse) {
     option (google.api.http) = {
-      post: "/api/v1/wishlist/items"
+      post: "/api/v1/wishlist/toggle"
       body: "*"
     };
   }
@@ -40,11 +40,11 @@ message GetWishlistResponse {
   repeated WishlistItem items = 1;
 }
 
-message AddItemRequest {
+message ToggleWishlistItemRequest {
   string product_id = 1;
 }
 
-message AddItemResponse {
+message ToggleWishlistItemResponse {
   WishlistItem item = 1;
 }
 
@@ -68,4 +68,5 @@ message WishlistItem {
   int64                     id         = 1;
   string                    product_id = 2;
   google.protobuf.Timestamp created_at = 3;
+  bool                      added      = 4;
 }

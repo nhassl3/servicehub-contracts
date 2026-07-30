@@ -273,22 +273,22 @@ var _ interface {
 	ErrorName() string
 } = GetWishlistResponseValidationError{}
 
-// Validate checks the field values on AddItemRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *AddItemRequest) Validate() error {
+// Validate checks the field values on ToggleWishlistItemRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ToggleWishlistItemRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AddItemRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in AddItemRequestMultiError,
-// or nil if none found.
-func (m *AddItemRequest) ValidateAll() error {
+// ValidateAll checks the field values on ToggleWishlistItemRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ToggleWishlistItemRequestMultiError, or nil if none found.
+func (m *ToggleWishlistItemRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AddItemRequest) validate(all bool) error {
+func (m *ToggleWishlistItemRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -298,19 +298,19 @@ func (m *AddItemRequest) validate(all bool) error {
 	// no validation rules for ProductId
 
 	if len(errors) > 0 {
-		return AddItemRequestMultiError(errors)
+		return ToggleWishlistItemRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// AddItemRequestMultiError is an error wrapping multiple validation errors
-// returned by AddItemRequest.ValidateAll() if the designated constraints
-// aren't met.
-type AddItemRequestMultiError []error
+// ToggleWishlistItemRequestMultiError is an error wrapping multiple validation
+// errors returned by ToggleWishlistItemRequest.ValidateAll() if the
+// designated constraints aren't met.
+type ToggleWishlistItemRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AddItemRequestMultiError) Error() string {
+func (m ToggleWishlistItemRequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -319,11 +319,11 @@ func (m AddItemRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AddItemRequestMultiError) AllErrors() []error { return m }
+func (m ToggleWishlistItemRequestMultiError) AllErrors() []error { return m }
 
-// AddItemRequestValidationError is the validation error returned by
-// AddItemRequest.Validate if the designated constraints aren't met.
-type AddItemRequestValidationError struct {
+// ToggleWishlistItemRequestValidationError is the validation error returned by
+// ToggleWishlistItemRequest.Validate if the designated constraints aren't met.
+type ToggleWishlistItemRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -331,22 +331,24 @@ type AddItemRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AddItemRequestValidationError) Field() string { return e.field }
+func (e ToggleWishlistItemRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AddItemRequestValidationError) Reason() string { return e.reason }
+func (e ToggleWishlistItemRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AddItemRequestValidationError) Cause() error { return e.cause }
+func (e ToggleWishlistItemRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AddItemRequestValidationError) Key() bool { return e.key }
+func (e ToggleWishlistItemRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AddItemRequestValidationError) ErrorName() string { return "AddItemRequestValidationError" }
+func (e ToggleWishlistItemRequestValidationError) ErrorName() string {
+	return "ToggleWishlistItemRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e AddItemRequestValidationError) Error() string {
+func (e ToggleWishlistItemRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -358,14 +360,14 @@ func (e AddItemRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAddItemRequest.%s: %s%s",
+		"invalid %sToggleWishlistItemRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AddItemRequestValidationError{}
+var _ error = ToggleWishlistItemRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -373,24 +375,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AddItemRequestValidationError{}
+} = ToggleWishlistItemRequestValidationError{}
 
-// Validate checks the field values on AddItemResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *AddItemResponse) Validate() error {
+// Validate checks the field values on ToggleWishlistItemResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ToggleWishlistItemResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AddItemResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on ToggleWishlistItemResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// AddItemResponseMultiError, or nil if none found.
-func (m *AddItemResponse) ValidateAll() error {
+// ToggleWishlistItemResponseMultiError, or nil if none found.
+func (m *ToggleWishlistItemResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AddItemResponse) validate(all bool) error {
+func (m *ToggleWishlistItemResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -401,7 +403,7 @@ func (m *AddItemResponse) validate(all bool) error {
 		switch v := interface{}(m.GetItem()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, AddItemResponseValidationError{
+				errors = append(errors, ToggleWishlistItemResponseValidationError{
 					field:  "Item",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -409,7 +411,7 @@ func (m *AddItemResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, AddItemResponseValidationError{
+				errors = append(errors, ToggleWishlistItemResponseValidationError{
 					field:  "Item",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -418,7 +420,7 @@ func (m *AddItemResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetItem()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return AddItemResponseValidationError{
+			return ToggleWishlistItemResponseValidationError{
 				field:  "Item",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -427,19 +429,19 @@ func (m *AddItemResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return AddItemResponseMultiError(errors)
+		return ToggleWishlistItemResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// AddItemResponseMultiError is an error wrapping multiple validation errors
-// returned by AddItemResponse.ValidateAll() if the designated constraints
-// aren't met.
-type AddItemResponseMultiError []error
+// ToggleWishlistItemResponseMultiError is an error wrapping multiple
+// validation errors returned by ToggleWishlistItemResponse.ValidateAll() if
+// the designated constraints aren't met.
+type ToggleWishlistItemResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AddItemResponseMultiError) Error() string {
+func (m ToggleWishlistItemResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -448,11 +450,11 @@ func (m AddItemResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AddItemResponseMultiError) AllErrors() []error { return m }
+func (m ToggleWishlistItemResponseMultiError) AllErrors() []error { return m }
 
-// AddItemResponseValidationError is the validation error returned by
-// AddItemResponse.Validate if the designated constraints aren't met.
-type AddItemResponseValidationError struct {
+// ToggleWishlistItemResponseValidationError is the validation error returned
+// by ToggleWishlistItemResponse.Validate if the designated constraints aren't met.
+type ToggleWishlistItemResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -460,22 +462,24 @@ type AddItemResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e AddItemResponseValidationError) Field() string { return e.field }
+func (e ToggleWishlistItemResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AddItemResponseValidationError) Reason() string { return e.reason }
+func (e ToggleWishlistItemResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AddItemResponseValidationError) Cause() error { return e.cause }
+func (e ToggleWishlistItemResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AddItemResponseValidationError) Key() bool { return e.key }
+func (e ToggleWishlistItemResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AddItemResponseValidationError) ErrorName() string { return "AddItemResponseValidationError" }
+func (e ToggleWishlistItemResponseValidationError) ErrorName() string {
+	return "ToggleWishlistItemResponseValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e AddItemResponseValidationError) Error() string {
+func (e ToggleWishlistItemResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -487,14 +491,14 @@ func (e AddItemResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAddItemResponse.%s: %s%s",
+		"invalid %sToggleWishlistItemResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AddItemResponseValidationError{}
+var _ error = ToggleWishlistItemResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -502,7 +506,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AddItemResponseValidationError{}
+} = ToggleWishlistItemResponseValidationError{}
 
 // Validate checks the field values on RemoveItemRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -974,6 +978,8 @@ func (m *WishlistItem) validate(all bool) error {
 			}
 		}
 	}
+
+	// no validation rules for Added
 
 	if len(errors) > 0 {
 		return WishlistItemMultiError(errors)
