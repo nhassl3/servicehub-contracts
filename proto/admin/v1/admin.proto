@@ -5,6 +5,7 @@ package admin.v1;
 import "googleapis/google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "moderation/v1/moderation.proto";
+import "product/v1/product.proto";
 
 option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/admin/v1;adminv1";
 
@@ -48,6 +49,55 @@ service AdminService {
       get: "/api/v1/admins/me/moderatedproducts"
     };
   }
+
+  rpc GetAdminStatistics(GetAdminStatisticsRequest) returns (GetAdminStatisticsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/admins/me/statistics"
+    };
+  }
+}
+
+message GetAdminStatisticsRequest {
+  google.protobuf.Timestamp from = 1;
+  google.protobuf.Timestamp to = 2; // default last 30 days
+  string granularity = 3; // "day" | "hour", default "day
+}
+
+message GetAdminStatisticsResponse {
+  ProductStatusStats products = 1; // verified(active) / pending(draft) / rejected(inactive)
+  repeated TopProduct top_products = 2; // by rating
+  repeated CategorySales top_categories = 3;
+  repeated RegistrationPoint registrations = 4; // by days/hours
+  repeated ModeratePoint moderates = 5; // by days + split by admins
+}
+
+message CategorySales {
+  int32 category_id = 1;
+  string name = 2;
+  int32 sales_count = 3; // or double total_revenue if calculate sum
+}
+
+message RegistrationPoint {
+  google.protobuf.Timestamp bucket = 1; // day or hour
+  int32 count = 2;
+}
+
+message ModeratePoint {
+  google.protobuf.Timestamp bucket = 1;
+  int32 count = 2;
+  string admin_id = 3;
+  string admin_name = 4;
+}
+
+message ProductStatusStats {
+  int32 verified_count = 1;
+  int32 pending_count = 2;
+  int32 rejected_count = 3;
+}
+
+message TopProduct {
+  product.v1.Product product = 1;
+
 }
 
 message CreateAdminRequest {
