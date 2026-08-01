@@ -25,6 +25,7 @@ const (
 	AdminService_IncreaseTotalModerates_FullMethodName = "/admin.v1.AdminService/IncreaseTotalModerates"
 	AdminService_UploadAvatar_FullMethodName           = "/admin.v1.AdminService/UploadAvatar"
 	AdminService_GetModeratedProducts_FullMethodName   = "/admin.v1.AdminService/GetModeratedProducts"
+	AdminService_GetAdminStatistics_FullMethodName     = "/admin.v1.AdminService/GetAdminStatistics"
 )
 
 // AdminServiceClient is the client API for AdminService service.
@@ -37,6 +38,7 @@ type AdminServiceClient interface {
 	IncreaseTotalModerates(ctx context.Context, in *IncreaseAdminModeratesRequest, opts ...grpc.CallOption) (*IncreaseAdminModeratesResponse, error)
 	UploadAvatar(ctx context.Context, in *UploadAvatarRequest, opts ...grpc.CallOption) (*UploadAvatarResponse, error)
 	GetModeratedProducts(ctx context.Context, in *GetModeratedProductsRequest, opts ...grpc.CallOption) (*GetModeratedProductsResponse, error)
+	GetAdminStatistics(ctx context.Context, in *GetAdminStatisticsRequest, opts ...grpc.CallOption) (*GetAdminStatisticsResponse, error)
 }
 
 type adminServiceClient struct {
@@ -107,6 +109,16 @@ func (c *adminServiceClient) GetModeratedProducts(ctx context.Context, in *GetMo
 	return out, nil
 }
 
+func (c *adminServiceClient) GetAdminStatistics(ctx context.Context, in *GetAdminStatisticsRequest, opts ...grpc.CallOption) (*GetAdminStatisticsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAdminStatisticsResponse)
+	err := c.cc.Invoke(ctx, AdminService_GetAdminStatistics_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility.
@@ -117,6 +129,7 @@ type AdminServiceServer interface {
 	IncreaseTotalModerates(context.Context, *IncreaseAdminModeratesRequest) (*IncreaseAdminModeratesResponse, error)
 	UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error)
 	GetModeratedProducts(context.Context, *GetModeratedProductsRequest) (*GetModeratedProductsResponse, error)
+	GetAdminStatistics(context.Context, *GetAdminStatisticsRequest) (*GetAdminStatisticsResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -144,6 +157,9 @@ func (UnimplementedAdminServiceServer) UploadAvatar(context.Context, *UploadAvat
 }
 func (UnimplementedAdminServiceServer) GetModeratedProducts(context.Context, *GetModeratedProductsRequest) (*GetModeratedProductsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetModeratedProducts not implemented")
+}
+func (UnimplementedAdminServiceServer) GetAdminStatistics(context.Context, *GetAdminStatisticsRequest) (*GetAdminStatisticsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetAdminStatistics not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 func (UnimplementedAdminServiceServer) testEmbeddedByValue()                      {}
@@ -274,6 +290,24 @@ func _AdminService_GetModeratedProducts_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_GetAdminStatistics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAdminStatisticsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).GetAdminStatistics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_GetAdminStatistics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).GetAdminStatistics(ctx, req.(*GetAdminStatisticsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminService_ServiceDesc is the grpc.ServiceDesc for AdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +338,10 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetModeratedProducts",
 			Handler:    _AdminService_GetModeratedProducts_Handler,
+		},
+		{
+			MethodName: "GetAdminStatistics",
+			Handler:    _AdminService_GetAdminStatistics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
