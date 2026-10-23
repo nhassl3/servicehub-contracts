@@ -322,7 +322,6 @@ func (x *UpdateSellerResponse) GetSeller() *SellerProfile {
 type UploadAvatarRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty"`
-	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -362,13 +361,6 @@ func (x *UploadAvatarRequest) GetFileData() []byte {
 		return x.FileData
 	}
 	return nil
-}
-
-func (x *UploadAvatarRequest) GetContentType() string {
-	if x != nil {
-		return x.ContentType
-	}
-	return ""
 }
 
 type UploadAvatarResponse struct {
@@ -547,10 +539,9 @@ const file_seller_v1_seller_proto_rawDesc = "" +
 	"\n" +
 	"avatar_url\x18\x03 \x01(\tR\tavatarUrl\"H\n" +
 	"\x14UpdateSellerResponse\x120\n" +
-	"\x06seller\x18\x01 \x01(\v2\x18.seller.v1.SellerProfileR\x06seller\"U\n" +
+	"\x06seller\x18\x01 \x01(\v2\x18.seller.v1.SellerProfileR\x06seller\"2\n" +
 	"\x13UploadAvatarRequest\x12\x1b\n" +
-	"\tfile_data\x18\x01 \x01(\fR\bfileData\x12!\n" +
-	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\"H\n" +
+	"\tfile_data\x18\x01 \x01(\fR\bfileData\"H\n" +
 	"\x14UploadAvatarResponse\x120\n" +
 	"\x06seller\x18\x01 \x01(\v2\x18.seller.v1.SellerProfileR\x06seller\"\xce\x02\n" +
 	"\rSellerProfile\x12\x0e\n" +

@@ -35,6 +35,274 @@ var (
 	_ = sort.Sort
 )
 
+// Validate checks the field values on ResetEmailRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ResetEmailRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ResetEmailRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ResetEmailRequestMultiError, or nil if none found.
+func (m *ResetEmailRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ResetEmailRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if err := m._validateEmail(m.GetNewEmail()); err != nil {
+		err = ResetEmailRequestValidationError{
+			field:  "NewEmail",
+			reason: "value must be a valid email address",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ResetEmailRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *ResetEmailRequest) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
+
+	return nil
+}
+
+func (m *ResetEmailRequest) _validateEmail(addr string) error {
+	a, err := mail.ParseAddress(addr)
+	if err != nil {
+		return err
+	}
+	addr = a.Address
+
+	if len(addr) > 254 {
+		return errors.New("email addresses cannot exceed 254 characters")
+	}
+
+	parts := strings.SplitN(addr, "@", 2)
+
+	if len(parts[0]) > 64 {
+		return errors.New("email address local phrase cannot exceed 64 characters")
+	}
+
+	return m._validateHostname(parts[1])
+}
+
+// ResetEmailRequestMultiError is an error wrapping multiple validation errors
+// returned by ResetEmailRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ResetEmailRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ResetEmailRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ResetEmailRequestMultiError) AllErrors() []error { return m }
+
+// ResetEmailRequestValidationError is the validation error returned by
+// ResetEmailRequest.Validate if the designated constraints aren't met.
+type ResetEmailRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ResetEmailRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ResetEmailRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ResetEmailRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ResetEmailRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ResetEmailRequestValidationError) ErrorName() string {
+	return "ResetEmailRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ResetEmailRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sResetEmailRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ResetEmailRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ResetEmailRequestValidationError{}
+
+// Validate checks the field values on ResetEmailResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ResetEmailResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ResetEmailResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ResetEmailResponseMultiError, or nil if none found.
+func (m *ResetEmailResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ResetEmailResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	if len(errors) > 0 {
+		return ResetEmailResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ResetEmailResponseMultiError is an error wrapping multiple validation errors
+// returned by ResetEmailResponse.ValidateAll() if the designated constraints
+// aren't met.
+type ResetEmailResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ResetEmailResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ResetEmailResponseMultiError) AllErrors() []error { return m }
+
+// ResetEmailResponseValidationError is the validation error returned by
+// ResetEmailResponse.Validate if the designated constraints aren't met.
+type ResetEmailResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ResetEmailResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ResetEmailResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ResetEmailResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ResetEmailResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ResetEmailResponseValidationError) ErrorName() string {
+	return "ResetEmailResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ResetEmailResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sResetEmailResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ResetEmailResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ResetEmailResponseValidationError{}
+
 // Validate checks the field values on RequestVerifyEmailRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.

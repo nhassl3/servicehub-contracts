@@ -912,7 +912,6 @@ func (*IncreaseAdminModeratesResponse) Descriptor() ([]byte, []int) {
 type UploadAvatarRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty"`
-	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -952,13 +951,6 @@ func (x *UploadAvatarRequest) GetFileData() []byte {
 		return x.FileData
 	}
 	return nil
-}
-
-func (x *UploadAvatarRequest) GetContentType() string {
-	if x != nil {
-		return x.ContentType
-	}
-	return ""
 }
 
 type UploadAvatarResponse struct {
@@ -1172,10 +1164,9 @@ const file_admin_v1_admin_proto_rawDesc = "" +
 	"\x05admin\x18\x01 \x01(\v2\x16.admin.v1.AdminProfileR\x05admin\"J\n" +
 	"\x1dIncreaseAdminModeratesRequest\x12)\n" +
 	"\x10total_moderation\x18\x01 \x01(\x05R\x0ftotalModeration\" \n" +
-	"\x1eIncreaseAdminModeratesResponse\"U\n" +
+	"\x1eIncreaseAdminModeratesResponse\"2\n" +
 	"\x13UploadAvatarRequest\x12\x1b\n" +
-	"\tfile_data\x18\x01 \x01(\fR\bfileData\x12!\n" +
-	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\"D\n" +
+	"\tfile_data\x18\x01 \x01(\fR\bfileData\"D\n" +
 	"\x14UploadAvatarResponse\x12,\n" +
 	"\x05admin\x18\x01 \x01(\v2\x16.admin.v1.AdminProfileR\x05admin\"\xc0\x02\n" +
 	"\fAdminProfile\x12\x0e\n" +

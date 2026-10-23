@@ -306,7 +306,6 @@ func (x *UpdatePasswordResponse) GetUser() *UserProfile {
 type UploadAvatarRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty"`
-	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -346,13 +345,6 @@ func (x *UploadAvatarRequest) GetFileData() []byte {
 		return x.FileData
 	}
 	return nil
-}
-
-func (x *UploadAvatarRequest) GetContentType() string {
-	if x != nil {
-		return x.ContentType
-	}
-	return ""
 }
 
 type UploadAvatarResponse struct {
@@ -526,10 +518,9 @@ const file_user_v1_user_proto_rawDesc = "" +
 	"\fold_password\x18\x01 \x01(\tR\voldPassword\x12!\n" +
 	"\fnew_password\x18\x02 \x01(\tR\vnewPassword\"B\n" +
 	"\x16UpdatePasswordResponse\x12(\n" +
-	"\x04user\x18\x01 \x01(\v2\x14.user.v1.UserProfileR\x04user\"U\n" +
+	"\x04user\x18\x01 \x01(\v2\x14.user.v1.UserProfileR\x04user\"2\n" +
 	"\x13UploadAvatarRequest\x12\x1b\n" +
-	"\tfile_data\x18\x01 \x01(\fR\bfileData\x12!\n" +
-	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\"@\n" +
+	"\tfile_data\x18\x01 \x01(\fR\bfileData\"@\n" +
 	"\x14UploadAvatarResponse\x12(\n" +
 	"\x04user\x18\x01 \x01(\v2\x14.user.v1.UserProfileR\x04user\"\xb4\x02\n" +
 	"\vUserProfile\x12\x1a\n" +

@@ -776,8 +776,6 @@ func (m *UploadAvatarRequest) validate(all bool) error {
 
 	// no validation rules for FileData
 
-	// no validation rules for ContentType
-
 	if len(errors) > 0 {
 		return UploadAvatarRequestMultiError(errors)
 	}
