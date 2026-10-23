@@ -51,6 +51,13 @@ service AuthService {
     };
   }
 
+  rpc ResetEmail(ResetEmailRequest) returns (ResetEmailResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/reset-email"
+      body: "*"
+    };
+  }
+
   rpc Logout(LogoutRequest) returns (LogoutResponse) {
     option (google.api.http) = {
       post: "/api/v1/auth/logout"
@@ -70,6 +77,14 @@ service AuthService {
       get: "/api/v1/auth/me"
     };
   }
+}
+
+message ResetEmailRequest {
+  string new_email = 1 [(validate.rules).string.email = true];
+}
+
+message ResetEmailResponse {
+  bool success = 1;
 }
 
 message RequestVerifyEmailRequest {

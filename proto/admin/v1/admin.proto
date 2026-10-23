@@ -143,7 +143,6 @@ message IncreaseAdminModeratesResponse {}
 
 message UploadAvatarRequest {
   bytes file_data     = 1;
-  string content_type = 2;
 }
 
 message UploadAvatarResponse {
