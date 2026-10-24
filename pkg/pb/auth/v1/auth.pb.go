@@ -70,7 +70,7 @@ func (x *ResetEmailRequest) GetNewEmail() string {
 
 type ResetEmailResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	OperationId   string                 `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -105,11 +105,11 @@ func (*ResetEmailResponse) Descriptor() ([]byte, []int) {
 	return file_auth_v1_auth_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ResetEmailResponse) GetSuccess() bool {
+func (x *ResetEmailResponse) GetOperationId() string {
 	if x != nil {
-		return x.Success
+		return x.OperationId
 	}
-	return false
+	return ""
 }
 
 type RequestVerifyEmailRequest struct {
@@ -1100,9 +1100,9 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
 	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a'googleapis/google/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"9\n" +
 	"\x11ResetEmailRequest\x12$\n" +
-	"\tnew_email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01R\bnewEmail\".\n" +
-	"\x12ResetEmailResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\":\n" +
+	"\tnew_email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01R\bnewEmail\"7\n" +
+	"\x12ResetEmailResponse\x12!\n" +
+	"\foperation_id\x18\x01 \x01(\tR\voperationId\":\n" +
 	"\x19RequestVerifyEmailRequest\x12\x1d\n" +
 	"\x05email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01R\x05email\"?\n" +
 	"\x1aRequestVerifyEmailResponse\x12!\n" +

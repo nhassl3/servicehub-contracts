@@ -84,7 +84,7 @@ message ResetEmailRequest {
 }
 
 message ResetEmailResponse {
-  bool success = 1;
+  string operation_id = 1;
 }
 
 message RequestVerifyEmailRequest {

@@ -221,7 +221,7 @@ func (m *ResetEmailResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Success
+	// no validation rules for OperationId
 
 	if len(errors) > 0 {
 		return ResetEmailResponseMultiError(errors)
