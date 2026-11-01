@@ -25,7 +25,12 @@ const (
 )
 
 type OAuthLoginRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	Username string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Email    string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	// RE2 do not support lookahead-assertions (REGEX syntax) —
+	// this is a fundamental limitation that cannot be circumvented in .proto
+	Password      string `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -58,6 +63,27 @@ func (x *OAuthLoginRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use OAuthLoginRequest.ProtoReflect.Descriptor instead.
 func (*OAuthLoginRequest) Descriptor() ([]byte, []int) {
 	return file_auth_v1_auth_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *OAuthLoginRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *OAuthLoginRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *OAuthLoginRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
 }
 
 type ResetEmailRequest struct {
@@ -1134,8 +1160,11 @@ var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a'googleapis/google/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"\x13\n" +
-	"\x11oAuthLoginRequest\"9\n" +
+	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a'googleapis/google/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"\xd6\x01\n" +
+	"\x11oAuthLoginRequest\x12G\n" +
+	"\busername\x18\x01 \x01(\tB+\xfaB(r&(\x80\x022!^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$R\busername\x12\x1d\n" +
+	"\x05email\x18\x02 \x01(\tB\a\xfaB\x04r\x02`\x01R\x05email\x12Y\n" +
+	"\bpassword\x18\x03 \x01(\tB=\xfaB:r8\x10\b24^[a-zA-Z0-9!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?\\\\|`~]{8,}$R\bpassword\"9\n" +
 	"\x11ResetEmailRequest\x12$\n" +
 	"\tnew_email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01R\bnewEmail\"7\n" +
 	"\x12ResetEmailResponse\x12!\n" +

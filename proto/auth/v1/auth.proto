@@ -85,7 +85,22 @@ service AuthService {
   }
 }
 
-message oAuthLoginRequest {}
+message oAuthLoginRequest {
+  string username  = 1 [
+    (validate.rules).string = {
+      pattern: "^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$",
+
+      max_bytes: 256,
+    }
+  ];
+  string email     = 2 [(validate.rules).string.email = true];
+  // RE2 do not support lookahead-assertions (REGEX syntax) —
+  // this is a fundamental limitation that cannot be circumvented in .proto
+  string password  = 3 [(validate.rules).string = {
+    pattern: "^[a-zA-Z0-9!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?\\\\|`~]{8,}$",
+    min_len: 8,
+  }];
+}
 
 message ResetEmailRequest {
   string new_email = 1 [(validate.rules).string.email = true];
