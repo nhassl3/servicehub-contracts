@@ -9,7 +9,13 @@ import "validate/validate.proto";
 option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/auth/v1;authv1";
 
 service AuthService {
-  rpc Register(RegisterRequest) returns (RegisterResponse) {
+  rpc oAuthLogin(oAuthLoginRequest) returns (AuthResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/oauth/login"
+    };
+  }
+
+  rpc Register(RegisterRequest) returns (AuthResponse) {
     option (google.api.http) = {
       post: "/api/v1/auth/register"
       body: "*"
@@ -79,6 +85,8 @@ service AuthService {
   }
 }
 
+message oAuthLoginRequest {}
+
 message ResetEmailRequest {
   string new_email = 1 [(validate.rules).string.email = true];
 }
@@ -123,7 +131,7 @@ message RegisterRequest {
   string full_name = 4 [(validate.rules).string.pattern = "^[A-Za-zА-Яа-яЁё\\-' ]{2,100}$"];
 }
 
-message RegisterResponse {
+message AuthResponse {
   string access_token  = 1;
   string refresh_token = 2;
   UserInfo user        = 3;

@@ -35,6 +35,108 @@ var (
 	_ = sort.Sort
 )
 
+// Validate checks the field values on OAuthLoginRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *OAuthLoginRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OAuthLoginRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// OAuthLoginRequestMultiError, or nil if none found.
+func (m *OAuthLoginRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OAuthLoginRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return OAuthLoginRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// OAuthLoginRequestMultiError is an error wrapping multiple validation errors
+// returned by OAuthLoginRequest.ValidateAll() if the designated constraints
+// aren't met.
+type OAuthLoginRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OAuthLoginRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OAuthLoginRequestMultiError) AllErrors() []error { return m }
+
+// OAuthLoginRequestValidationError is the validation error returned by
+// OAuthLoginRequest.Validate if the designated constraints aren't met.
+type OAuthLoginRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OAuthLoginRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OAuthLoginRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OAuthLoginRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OAuthLoginRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OAuthLoginRequestValidationError) ErrorName() string {
+	return "OAuthLoginRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e OAuthLoginRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOAuthLoginRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OAuthLoginRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OAuthLoginRequestValidationError{}
+
 // Validate checks the field values on ResetEmailRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -1006,22 +1108,22 @@ var _RegisterRequest_Password_Pattern = regexp.MustCompile("^[a-zA-Z0-9!@#$%^&*(
 
 var _RegisterRequest_FullName_Pattern = regexp.MustCompile("^[A-Za-zА-Яа-яЁё\\-' ]{2,100}$")
 
-// Validate checks the field values on RegisterResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *RegisterResponse) Validate() error {
+// Validate checks the field values on AuthResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *AuthResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on RegisterResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// RegisterResponseMultiError, or nil if none found.
-func (m *RegisterResponse) ValidateAll() error {
+// ValidateAll checks the field values on AuthResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in AuthResponseMultiError, or
+// nil if none found.
+func (m *AuthResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RegisterResponse) validate(all bool) error {
+func (m *AuthResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1036,7 +1138,7 @@ func (m *RegisterResponse) validate(all bool) error {
 		switch v := interface{}(m.GetUser()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RegisterResponseValidationError{
+				errors = append(errors, AuthResponseValidationError{
 					field:  "User",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1044,7 +1146,7 @@ func (m *RegisterResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, RegisterResponseValidationError{
+				errors = append(errors, AuthResponseValidationError{
 					field:  "User",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1053,7 +1155,7 @@ func (m *RegisterResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetUser()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RegisterResponseValidationError{
+			return AuthResponseValidationError{
 				field:  "User",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1062,19 +1164,18 @@ func (m *RegisterResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return RegisterResponseMultiError(errors)
+		return AuthResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// RegisterResponseMultiError is an error wrapping multiple validation errors
-// returned by RegisterResponse.ValidateAll() if the designated constraints
-// aren't met.
-type RegisterResponseMultiError []error
+// AuthResponseMultiError is an error wrapping multiple validation errors
+// returned by AuthResponse.ValidateAll() if the designated constraints aren't met.
+type AuthResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RegisterResponseMultiError) Error() string {
+func (m AuthResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1083,11 +1184,11 @@ func (m RegisterResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RegisterResponseMultiError) AllErrors() []error { return m }
+func (m AuthResponseMultiError) AllErrors() []error { return m }
 
-// RegisterResponseValidationError is the validation error returned by
-// RegisterResponse.Validate if the designated constraints aren't met.
-type RegisterResponseValidationError struct {
+// AuthResponseValidationError is the validation error returned by
+// AuthResponse.Validate if the designated constraints aren't met.
+type AuthResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1095,22 +1196,22 @@ type RegisterResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e RegisterResponseValidationError) Field() string { return e.field }
+func (e AuthResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RegisterResponseValidationError) Reason() string { return e.reason }
+func (e AuthResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RegisterResponseValidationError) Cause() error { return e.cause }
+func (e AuthResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RegisterResponseValidationError) Key() bool { return e.key }
+func (e AuthResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RegisterResponseValidationError) ErrorName() string { return "RegisterResponseValidationError" }
+func (e AuthResponseValidationError) ErrorName() string { return "AuthResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e RegisterResponseValidationError) Error() string {
+func (e AuthResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1122,14 +1223,14 @@ func (e RegisterResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRegisterResponse.%s: %s%s",
+		"invalid %sAuthResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RegisterResponseValidationError{}
+var _ error = AuthResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -1137,7 +1238,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RegisterResponseValidationError{}
+} = AuthResponseValidationError{}
 
 // Validate checks the field values on LoginRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
