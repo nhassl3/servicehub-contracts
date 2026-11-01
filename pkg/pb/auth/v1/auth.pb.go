@@ -1229,10 +1229,10 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x04role\x18\x06 \x01(\tR\x04role\x129\n" +
 	"\n" +
 	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1b\n" +
-	"\tis_active\x18\b \x01(\bR\bisActive2\xb3\t\n" +
-	"\vAuthService\x12\\\n" +
+	"\tis_active\x18\b \x01(\bR\bisActive2\xb6\t\n" +
+	"\vAuthService\x12_\n" +
 	"\n" +
-	"oAuthLogin\x12\x1a.auth.v1.oAuthLoginRequest\x1a\x15.auth.v1.AuthResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\"\x13/api/v1/oauth/login\x12]\n" +
+	"oAuthLogin\x12\x1a.auth.v1.oAuthLoginRequest\x1a\x15.auth.v1.AuthResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/api/v1/oauth/login\x12]\n" +
 	"\bRegister\x12\x18.auth.v1.RegisterRequest\x1a\x15.auth.v1.AuthResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/auth/register\x12U\n" +
 	"\x05Login\x12\x15.auth.v1.LoginRequest\x1a\x16.auth.v1.LoginResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/api/v1/auth/login\x12\x93\x01\n" +
 	"\x14RequestResetPassword\x12$.auth.v1.RequestResetPasswordRequest\x1a%.auth.v1.RequestResetPasswordResponse\".\x82\xd3\xe4\x93\x02(:\x01*\"#/api/v1/auth/request-reset-password\x12v\n" +
