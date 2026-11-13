@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package user_history.v1;
+
+import "googleapis/google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nhassl3/servicehub-contracts/pkg/pb/user_history/v1;userhistoryv1";
+
+// A read-only. Writing to the history occurs at the service layer
+service UserHistoryService {
+  rpc ListUserHistory(ListUserHistoryRequest) returns (ListUserHistoryResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/users_history",
+    };
+  };
+
+  rpc GetUserHistoryEntry(GetUserHistoryEntryRequest) returns (GetUserHistoryEntryResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/user_history/{id}",
+    };
+  };
+
+  rpc ListActorActivity(ListActorActivityRequest) returns (ListActorActivityResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/user_history/actor",
+    };
+  };
+}
+
+// Enum of history actions
+
+enum UserHistoryAction {
+  USER_HISTORY_ACTION_UNSPECIFIED       = 0;
+  USER_HISTORY_ACTION_CREATED           = 1;
+  USER_HISTORY_ACTION_UPDATED           = 2;
+  USER_HISTORY_ACTION_DELETED           = 3;
+  USER_HISTORY_ACTION_RESTORED          = 4;
+  USER_HISTORY_ACTION_LOGIN             = 5;
+  USER_HISTORY_ACTION_PASSWORD_CHANGED  = 6;
+  USER_HISTORY_ACTION_EMAIL_CHANGED     = 7;
+  USER_HISTORY_ACTION_ROLE_CHANGED      = 8;
+}
+
+// Extra types
+
+message FieldChange {
+  string field = 1;
+  google.protobuf.Value old_value = 2;
+  google.protobuf.Value new_value = 3;
+}
+
+// Requests
+
+message ListUserHistoryRequest {
+  string username = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message GetUserHistoryEntryRequest {
+  int64 id = 1;
+}
+
+message ListActorActivityRequest {
+  string actor_username = 1; // default 'system'
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+// Responses
+
+message ListUserHistoryResponse {
+  repeated UserHistoryEntry entries = 1;
+  string next_page_token = 2;
+}
+
+message GetUserHistoryEntryResponse {
+  UserHistoryEntry entry = 1;
+}
+
+message ListActorActivityResponse {
+  repeated UserHistoryEntry entries = 1;
+  string next_page_token = 2;
+}
+
+// Entry
+
+message UserHistoryEntry {
+  int64 id = 1;
+  string username = 2;
+  string actor_username = 3;
+  UserHistoryAction action = 4;
+  repeated FieldChange changes = 5;
+  optional string ip_address = 6;
+  optional string user_agent = 7;
+  optional string request_id = 8;
+  google.protobuf.Timestamp created_at = 9;
+}
