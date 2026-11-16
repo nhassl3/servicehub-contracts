@@ -55,6 +55,7 @@ message FieldChange {
 
 message ListUserHistoryRequest {
   string username = 1;
+  optional UserHistoryAction action = 4;
   int32 page_size = 2;
   string page_token = 3;
 }

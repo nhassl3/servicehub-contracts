@@ -222,6 +222,10 @@ func (m *ListUserHistoryRequest) validate(all bool) error {
 
 	// no validation rules for PageToken
 
+	if m.Action != nil {
+		// no validation rules for Action
+	}
+
 	if len(errors) > 0 {
 		return ListUserHistoryRequestMultiError(errors)
 	}

@@ -154,6 +154,7 @@ func (x *FieldChange) GetNewValue() *structpb.Value {
 type ListUserHistoryRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Action        *UserHistoryAction     `protobuf:"varint,4,opt,name=action,proto3,enum=user_history.v1.UserHistoryAction,oneof" json:"action,omitempty"`
 	PageSize      int32                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken     string                 `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -195,6 +196,13 @@ func (x *ListUserHistoryRequest) GetUsername() string {
 		return x.Username
 	}
 	return ""
+}
+
+func (x *ListUserHistoryRequest) GetAction() UserHistoryAction {
+	if x != nil && x.Action != nil {
+		return *x.Action
+	}
+	return UserHistoryAction_USER_HISTORY_ACTION_UNSPECIFIED
 }
 
 func (x *ListUserHistoryRequest) GetPageSize() int32 {
@@ -579,12 +587,14 @@ const file_user_history_v1_user_history_proto_rawDesc = "" +
 	"\vFieldChange\x12\x14\n" +
 	"\x05field\x18\x01 \x01(\tR\x05field\x123\n" +
 	"\told_value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\boldValue\x123\n" +
-	"\tnew_value\x18\x03 \x01(\v2\x16.google.protobuf.ValueR\bnewValue\"p\n" +
+	"\tnew_value\x18\x03 \x01(\v2\x16.google.protobuf.ValueR\bnewValue\"\xbc\x01\n" +
 	"\x16ListUserHistoryRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x1b\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12?\n" +
+	"\x06action\x18\x04 \x01(\x0e2\".user_history.v1.UserHistoryActionH\x00R\x06action\x88\x01\x01\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tR\tpageToken\",\n" +
+	"page_token\x18\x03 \x01(\tR\tpageTokenB\t\n" +
+	"\a_action\",\n" +
 	"\x1aGetUserHistoryEntryRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\"}\n" +
 	"\x18ListActorActivityRequest\x12%\n" +
@@ -662,23 +672,24 @@ var file_user_history_v1_user_history_proto_goTypes = []any{
 var file_user_history_v1_user_history_proto_depIdxs = []int32{
 	9,  // 0: user_history.v1.FieldChange.old_value:type_name -> google.protobuf.Value
 	9,  // 1: user_history.v1.FieldChange.new_value:type_name -> google.protobuf.Value
-	8,  // 2: user_history.v1.ListUserHistoryResponse.entries:type_name -> user_history.v1.UserHistoryEntry
-	8,  // 3: user_history.v1.GetUserHistoryEntryResponse.entry:type_name -> user_history.v1.UserHistoryEntry
-	8,  // 4: user_history.v1.ListActorActivityResponse.entries:type_name -> user_history.v1.UserHistoryEntry
-	0,  // 5: user_history.v1.UserHistoryEntry.action:type_name -> user_history.v1.UserHistoryAction
-	1,  // 6: user_history.v1.UserHistoryEntry.changes:type_name -> user_history.v1.FieldChange
-	10, // 7: user_history.v1.UserHistoryEntry.created_at:type_name -> google.protobuf.Timestamp
-	2,  // 8: user_history.v1.UserHistoryService.ListUserHistory:input_type -> user_history.v1.ListUserHistoryRequest
-	3,  // 9: user_history.v1.UserHistoryService.GetUserHistoryEntry:input_type -> user_history.v1.GetUserHistoryEntryRequest
-	4,  // 10: user_history.v1.UserHistoryService.ListActorActivity:input_type -> user_history.v1.ListActorActivityRequest
-	5,  // 11: user_history.v1.UserHistoryService.ListUserHistory:output_type -> user_history.v1.ListUserHistoryResponse
-	6,  // 12: user_history.v1.UserHistoryService.GetUserHistoryEntry:output_type -> user_history.v1.GetUserHistoryEntryResponse
-	7,  // 13: user_history.v1.UserHistoryService.ListActorActivity:output_type -> user_history.v1.ListActorActivityResponse
-	11, // [11:14] is the sub-list for method output_type
-	8,  // [8:11] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	0,  // 2: user_history.v1.ListUserHistoryRequest.action:type_name -> user_history.v1.UserHistoryAction
+	8,  // 3: user_history.v1.ListUserHistoryResponse.entries:type_name -> user_history.v1.UserHistoryEntry
+	8,  // 4: user_history.v1.GetUserHistoryEntryResponse.entry:type_name -> user_history.v1.UserHistoryEntry
+	8,  // 5: user_history.v1.ListActorActivityResponse.entries:type_name -> user_history.v1.UserHistoryEntry
+	0,  // 6: user_history.v1.UserHistoryEntry.action:type_name -> user_history.v1.UserHistoryAction
+	1,  // 7: user_history.v1.UserHistoryEntry.changes:type_name -> user_history.v1.FieldChange
+	10, // 8: user_history.v1.UserHistoryEntry.created_at:type_name -> google.protobuf.Timestamp
+	2,  // 9: user_history.v1.UserHistoryService.ListUserHistory:input_type -> user_history.v1.ListUserHistoryRequest
+	3,  // 10: user_history.v1.UserHistoryService.GetUserHistoryEntry:input_type -> user_history.v1.GetUserHistoryEntryRequest
+	4,  // 11: user_history.v1.UserHistoryService.ListActorActivity:input_type -> user_history.v1.ListActorActivityRequest
+	5,  // 12: user_history.v1.UserHistoryService.ListUserHistory:output_type -> user_history.v1.ListUserHistoryResponse
+	6,  // 13: user_history.v1.UserHistoryService.GetUserHistoryEntry:output_type -> user_history.v1.GetUserHistoryEntryResponse
+	7,  // 14: user_history.v1.UserHistoryService.ListActorActivity:output_type -> user_history.v1.ListActorActivityResponse
+	12, // [12:15] is the sub-list for method output_type
+	9,  // [9:12] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_user_history_v1_user_history_proto_init() }
@@ -686,6 +697,7 @@ func file_user_history_v1_user_history_proto_init() {
 	if File_user_history_v1_user_history_proto != nil {
 		return
 	}
+	file_user_history_v1_user_history_proto_msgTypes[1].OneofWrappers = []any{}
 	file_user_history_v1_user_history_proto_msgTypes[7].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
