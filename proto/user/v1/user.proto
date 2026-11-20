@@ -65,7 +65,9 @@ service UserService {
   }
 }
 
-message RequestResetEmailRequest {}
+message RequestResetEmailRequest {
+  string new_email = 1 [(validate.rules).string.email = true];
+}
 
 message RequestResetEmailResponse {
   string operation_id = 1;
@@ -73,7 +75,6 @@ message RequestResetEmailResponse {
 
 message ResetEmailRequest {
   string reset_email_token = 1;
-  string new_email = 2 [(validate.rules).string.email = true];
 }
 
 message ResetEmailResponse {

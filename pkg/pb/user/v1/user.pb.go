@@ -26,6 +26,7 @@ const (
 
 type RequestResetEmailRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	NewEmail      string                 `protobuf:"bytes,1,opt,name=new_email,json=newEmail,proto3" json:"new_email,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -58,6 +59,13 @@ func (x *RequestResetEmailRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use RequestResetEmailRequest.ProtoReflect.Descriptor instead.
 func (*RequestResetEmailRequest) Descriptor() ([]byte, []int) {
 	return file_user_v1_user_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *RequestResetEmailRequest) GetNewEmail() string {
+	if x != nil {
+		return x.NewEmail
+	}
+	return ""
 }
 
 type RequestResetEmailResponse struct {
@@ -107,7 +115,6 @@ func (x *RequestResetEmailResponse) GetOperationId() string {
 type ResetEmailRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	ResetEmailToken string                 `protobuf:"bytes,1,opt,name=reset_email_token,json=resetEmailToken,proto3" json:"reset_email_token,omitempty"`
-	NewEmail        string                 `protobuf:"bytes,2,opt,name=new_email,json=newEmail,proto3" json:"new_email,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -145,13 +152,6 @@ func (*ResetEmailRequest) Descriptor() ([]byte, []int) {
 func (x *ResetEmailRequest) GetResetEmailToken() string {
 	if x != nil {
 		return x.ResetEmailToken
-	}
-	return ""
-}
-
-func (x *ResetEmailRequest) GetNewEmail() string {
-	if x != nil {
-		return x.NewEmail
 	}
 	return ""
 }
@@ -881,13 +881,13 @@ var File_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_user_v1_user_proto_rawDesc = "" +
 	"\n" +
-	"\x12user/v1/user.proto\x12\auser.v1\x1a'googleapis/google/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"\x1a\n" +
-	"\x18RequestResetEmailRequest\">\n" +
+	"\x12user/v1/user.proto\x12\auser.v1\x1a'googleapis/google/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"@\n" +
+	"\x18RequestResetEmailRequest\x12$\n" +
+	"\tnew_email\x18\x01 \x01(\tB\a\xfaB\x04r\x02`\x01R\bnewEmail\">\n" +
 	"\x19RequestResetEmailResponse\x12!\n" +
-	"\foperation_id\x18\x01 \x01(\tR\voperationId\"e\n" +
+	"\foperation_id\x18\x01 \x01(\tR\voperationId\"?\n" +
 	"\x11ResetEmailRequest\x12*\n" +
-	"\x11reset_email_token\x18\x01 \x01(\tR\x0fresetEmailToken\x12$\n" +
-	"\tnew_email\x18\x02 \x01(\tB\a\xfaB\x04r\x02`\x01R\bnewEmail\".\n" +
+	"\x11reset_email_token\x18\x01 \x01(\tR\x0fresetEmailToken\".\n" +
 	"\x12ResetEmailResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xa6\x01\n" +
 	"\x1bRequestResetPasswordRequest\x12L\n" +
